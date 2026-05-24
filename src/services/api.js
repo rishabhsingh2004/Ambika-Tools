@@ -28,8 +28,11 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      clearToken();
-      window.location.href = '/admin/login';
+      const isAuthRoute = error.config?.url?.includes('/auth/');
+      if (isAuthRoute) {
+        clearToken();
+        window.location.href = '/admin/login';
+      }
     }
     return Promise.reject(error);
   }
