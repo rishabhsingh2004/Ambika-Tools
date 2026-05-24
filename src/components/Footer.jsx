@@ -1,8 +1,26 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, ChevronDown, MessageCircle, Instagram, Facebook, Youtube, Linkedin } from 'lucide-react';
+import { Phone, Mail, MapPin, ChevronDown, MessageCircle } from 'lucide-react';
 import { CATEGORIES } from '../data/products';
 import { config, waLink, igLink } from '../data/config';
+
+const socialLinks = [
+  {
+    name: 'Instagram',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/132px-Instagram_logo_2016.svg.png',
+    url: config.instagram || '#',
+  },
+  {
+    name: 'WhatsApp',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/132px-WhatsApp.svg.png',
+    url: waLink('Hi, I found you on your website!'),
+  },
+  {
+    name: 'Facebook',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/132px-2023_Facebook_icon.svg.png',
+    url: config.facebook || '#',
+  },
+];
 
 /* ── Accordion Section (mobile only) ── */
 const FooterSection = ({ title, children }) => {
@@ -27,24 +45,6 @@ const FooterSection = ({ title, children }) => {
   );
 };
 
-// Social icon button component
-const SocialBtn = ({ href, icon: Icon, label, color }) => {
-  if (!href) return null;
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      title={label}
-      className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 hover:-translate-y-0.5"
-      style={{ background: color }}
-    >
-      <Icon size={16} className="text-white" />
-    </a>
-  );
-};
-
 const Footer = () => {
   return (
     <footer className="relative bg-gray-900 text-gray-300 pt-10 sm:pt-14 pb-6 mt-16">
@@ -62,42 +62,24 @@ const Footer = () => {
             Precision industrial machines for cash counting, gold melting, weighing, and secure storage. Serving India since 2001.
           </p>
 
-          {/* Social Icons */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <SocialBtn
-              href={waLink('Hi, I found you on your website!')}
-              icon={MessageCircle}
-              label="WhatsApp"
-              color="linear-gradient(135deg, #22c55e, #16a34a)"
-            />
-            <SocialBtn
-              href={igLink()}
-              icon={Instagram}
-              label="Instagram"
-              color="linear-gradient(135deg, #f43f5e, #ec4899, #a855f7)"
-            />
-            <SocialBtn
-              href={config.facebook || null}
-              icon={Facebook}
-              label="Facebook"
-              color="linear-gradient(135deg, #3b82f6, #1d4ed8)"
-            />
-            {config.youtube && (
-              <SocialBtn
-                href={config.youtube}
-                icon={Youtube}
-                label="YouTube"
-                color="linear-gradient(135deg, #ef4444, #b91c1c)"
-              />
-            )}
-            {config.linkedin && (
-              <SocialBtn
-                href={config.linkedin}
-                icon={Linkedin}
-                label="LinkedIn"
-                color="linear-gradient(135deg, #0ea5e9, #0369a1)"
-              />
-            )}
+          {/* Social Icons — PNG based */}
+          <div className="social-icons">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.name}
+              >
+                <img
+                  src={social.icon}
+                  alt={social.name}
+                  width={32}
+                  height={32}
+                />
+              </a>
+            ))}
           </div>
         </div>
 
@@ -146,7 +128,7 @@ const Footer = () => {
               className="mt-2 inline-flex items-center gap-2 text-white text-sm font-semibold px-4 py-2.5 rounded-lg min-h-[44px] transition-all hover:opacity-90"
               style={{ background: 'linear-gradient(135deg, #f43f5e, #ec4899, #a855f7)' }}
             >
-              <Instagram size={16} /> Follow on Instagram
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/132px-Instagram_logo_2016.svg.png" alt="Instagram" width={16} height={16} /> Follow on Instagram
             </a>
           )}
         </FooterSection>

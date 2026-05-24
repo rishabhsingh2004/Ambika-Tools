@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { isAuthenticated } from '../utils/auth';
 import AdminLayout from './AdminLayout';

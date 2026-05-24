@@ -316,25 +316,23 @@ const Home = () => {
 
       <div className="sec-divider" />
 
-      {/* ═══ FEATURED PRODUCTS — Dark Theme ═══ */}
-      <section className="sec-pad reveal" style={{ background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)' }}>
+      {/* ═══ FEATURED PRODUCTS ═══ */}
+      <section className="sec-gray sec-pad reveal">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-12">
-            <p className="text-blue-400 text-xs font-bold uppercase tracking-[0.2em] mb-3">Top Picks</p>
-            <h2 className="font-poppins font-black text-2xl sm:text-3xl md:text-4xl text-white mb-3">
-              <span className="text-blue-400">Featured</span> Products
-            </h2>
-            <p className="text-gray-400 text-sm sm:text-base">Handpicked bestsellers trusted by thousands of businesses</p>
-            <div className="w-12 h-1 bg-blue-500 rounded-full mx-auto mt-4" />
+            <p className="section-label">Top Picks</p>
+            <h2 className="section-heading"><span>Featured</span> Products</h2>
+            <p className="section-subtitle">Handpicked bestsellers trusted by thousands of businesses</p>
+            <div className="section-accent" />
           </div>
           <div className="flex items-center justify-end mb-4 -mt-4">
-            <Link to="/products" className="flex items-center gap-1 text-sm text-blue-400 font-semibold hover:gap-2 hover:text-blue-300 transition-all">
+            <Link to="/products" className="flex items-center gap-1 text-sm text-blue-600 font-semibold hover:gap-2 hover:text-blue-700 transition-all">
               View All <ArrowRight size={15} />
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {featured.map(product => (
-              <ProductCard key={product.id} product={product} darkMode />
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </div>
