@@ -24,7 +24,7 @@ const Products = () => {
   useEffect(() => {
     getProducts()
       .then(res => { if (res.data?.length) setProducts(res.data); })
-      .catch(() => { /* keep static fallback */ })
+      .catch((err) => { console.error('API Error:', err); setLoading(false); })
       .finally(() => setLoading(false));
   }, []);
 
