@@ -3,24 +3,8 @@ import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ChevronDown, MessageCircle } from 'lucide-react';
 import { CATEGORIES } from '../data/products';
 import { config, waLink, igLink } from '../data/config';
-
-const socialLinks = [
-  {
-    name: 'Instagram',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/132px-Instagram_logo_2016.svg.png',
-    url: config.instagram || '#',
-  },
-  {
-    name: 'WhatsApp',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/132px-WhatsApp.svg.png',
-    url: waLink('Hi, I found you on your website!'),
-  },
-  {
-    name: 'Facebook',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/132px-2023_Facebook_icon.svg.png',
-    url: config.facebook || '#',
-  },
-];
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp, faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 
 /* ── Accordion Section (mobile only) ── */
 const FooterSection = ({ title, children }) => {
@@ -38,7 +22,7 @@ const FooterSection = ({ title, children }) => {
       {/* Desktop: always-visible header */}
       <h4 className="hidden sm:block text-white font-semibold mb-4 text-sm uppercase tracking-wide">{title}</h4>
       {/* Content */}
-      <div className={`overflow-hidden transition-all duration-300 sm:!max-h-none sm:!opacity-100 ${open ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0'}`}>
+      <div className={`overflow-hidden transition-all duration-300 sm:max-h-none! sm:opacity-100! ${open ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0'}`}>
         {children}
       </div>
     </div>
@@ -56,30 +40,29 @@ const Footer = () => {
         <div className="pb-6 sm:pb-0">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold font-poppins text-lg">A</div>
-            <span className="font-poppins font-bold text-white text-lg">Ambika Tools</span>
+            <span className="font-poppins font-bold text-white text-lg">{config.businessName}</span>
           </div>
           <p className="text-sm leading-relaxed text-gray-400 mb-5">
-            Precision industrial machines for cash counting, gold melting, weighing, and secure storage. Serving India since 2001.
+            Precision industrial machines for cash counting, gold melting, weighing, and secure storage. Serving India since {config.founded}.
           </p>
 
-          {/* Social Icons — PNG based */}
-          <div className="social-icons">
-            {socialLinks.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={social.name}
-              >
-                <img
-                  src={social.icon}
-                  alt={social.name}
-                  width={32}
-                  height={32}
-                />
-              </a>
-            ))}
+          {/* Social Icons */}
+          <div className="flex items-center gap-4">
+            {/* Instagram */}
+            <a href={config.instagram || '#'} target="_blank" rel="noreferrer" aria-label="Instagram"
+              className="text-gray-400 hover:text-pink-500 transition-transform duration-200 hover:scale-110">
+              <FontAwesomeIcon icon={faInstagram} className="text-2xl" />
+            </a>
+            {/* WhatsApp */}
+            <a href={waLink()} target="_blank" rel="noreferrer" aria-label="WhatsApp"
+              className="text-gray-400 hover:text-green-500 transition-transform duration-200 hover:scale-110">
+              <FontAwesomeIcon icon={faWhatsapp} className="text-2xl" />
+            </a>
+            {/* Facebook */}
+            <a href={config.facebook || '#'} target="_blank" rel="noreferrer" aria-label="Facebook"
+              className="text-gray-400 hover:text-blue-500 transition-transform duration-200 hover:scale-110">
+              <FontAwesomeIcon icon={faFacebookF} className="text-2xl" />
+            </a>
           </div>
         </div>
 
@@ -89,7 +72,7 @@ const Footer = () => {
             {CATEGORIES.map(cat => (
               <li key={cat.id}>
                 <Link to={`/products/${cat.id}`} className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2 min-h-[36px] sm:min-h-0">
-                  {cat.icon} {cat.label}
+                  {cat.label}
                 </Link>
               </li>
             ))}
@@ -111,7 +94,7 @@ const Footer = () => {
         <FooterSection title="Contact Us">
           <ul className="space-y-3 text-sm text-gray-400">
             <li className="flex gap-2 items-start"><Phone size={15} className="shrink-0 mt-0.5 text-blue-400" /><a href={`tel:${config.phoneDial}`} className="hover:text-white">{config.phone}</a></li>
-            <li className="flex gap-2 items-start"><Mail size={15} className="shrink-0 mt-0.5 text-blue-400" /><a href={`mailto:${config.salesEmail}`} className="hover:text-white">{config.salesEmail}</a></li>
+            <li className="flex gap-2 items-start"><Mail size={15} className="shrink-0 mt-0.5 text-blue-400" /><a href={`mailto:${config.email}`} className="hover:text-white">{config.email}</a></li>
             <li className="flex gap-2 items-start"><MapPin size={15} className="shrink-0 mt-0.5 text-blue-400" /><span>{config.address}</span></li>
           </ul>
 
@@ -119,23 +102,21 @@ const Footer = () => {
           <a href={waLink()} target="_blank" rel="noreferrer"
             className="mt-4 inline-flex items-center gap-2 bg-green-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-green-700 transition-colors min-h-[44px]"
           >
-            <MessageCircle size={16} /> WhatsApp Us
+            <FontAwesomeIcon icon={faWhatsapp} className="text-xl" /> WhatsApp Us
           </a>
 
           {/* Instagram CTA */}
-          {igLink() && (
-            <a href={igLink()} target="_blank" rel="noreferrer"
-              className="mt-2 inline-flex items-center gap-2 text-white text-sm font-semibold px-4 py-2.5 rounded-lg min-h-[44px] transition-all hover:opacity-90"
-              style={{ background: 'linear-gradient(135deg, #f43f5e, #ec4899, #a855f7)' }}
-            >
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/132px-Instagram_logo_2016.svg.png" alt="Instagram" width={16} height={16} /> Follow on Instagram
-            </a>
-          )}
+          <a href={config.instagram || '#'} target="_blank" rel="noreferrer"
+            className="mt-2 inline-flex items-center gap-2 text-white text-sm font-semibold px-4 py-2.5 rounded-lg min-h-[44px] transition-all hover:opacity-90"
+            style={{ background: 'linear-gradient(135deg, #f43f5e, #ec4899, #a855f7)' }}
+          >
+            <FontAwesomeIcon icon={faInstagram} className="text-xl" /> Follow on Instagram
+          </a>
         </FooterSection>
       </div>
 
       <div className="border-t border-gray-700/50 pt-5 max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-2 text-center sm:text-left">
-        <p>&copy; {new Date().getFullYear()} Ambika Tools. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} {config.businessName}. All Rights Reserved.</p>
         <p>Made in India 🇮🇳</p>
       </div>
     </footer>

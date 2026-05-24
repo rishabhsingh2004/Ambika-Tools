@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 import { waLink } from '../data/config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 const FloatingWhatsApp = () => {
   const [visible, setVisible] = useState(false);
@@ -64,7 +66,10 @@ const FloatingWhatsApp = () => {
         className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(34,197,94,0.4)] hover:shadow-[0_8px_30px_rgba(34,197,94,0.5)] transition-all duration-300 hover:scale-110 active:scale-95 group"
         style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)', animation: 'fadeInUp 0.5s cubic-bezier(0.34,1.56,0.64,1)' }}
       >
-        <MessageCircle size={24} className="sm:w-7 sm:h-7 text-white transition-transform duration-300 group-hover:rotate-12" />
+        <FontAwesomeIcon 
+          icon={faWhatsapp} 
+          className="text-2xl text-white"
+        />
       </a>
     </div>
   );

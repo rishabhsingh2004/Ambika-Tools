@@ -85,9 +85,10 @@ const Navbar = () => {
   }, [searchQuery]);
 
   const navLinks = [
-    { to: '/', label: 'Home' },
-    { to: '/about', label: 'About Us' },
-    { to: '/contact', label: 'Contact' },
+    { to: '/', label: 'Home', activeCheck: (path) => path === '/' },
+    { to: '/products', label: 'Products', activeCheck: (path) => path.startsWith('/products') },
+    { to: '/about', label: 'About Us', activeCheck: (path) => path === '/about' },
+    { to: '/contact', label: 'Contact', activeCheck: (path) => path === '/contact' },
   ];
 
   return (
@@ -118,40 +119,16 @@ const Navbar = () => {
           </Link>
 
           <nav className="hidden md:flex items-center gap-1 text-sm font-semibold">
-            {navLinks.map(({ to, label }) => (
-              <Link key={to} to={to}
-                className={`relative px-4 py-2.5 rounded-lg transition-all duration-200 font-semibold group/link overflow-hidden ${location.pathname === to ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'}`}>
-                {label}
-                <span className={`absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-blue-600 rounded-full transition-all duration-300 ${location.pathname === to ? 'w-4' : 'w-0 group-hover/link:w-4'}`} />
-              </Link>
-            ))}
-
-            <div className="relative" onMouseEnter={() => setProductsOpen(true)} onMouseLeave={() => setProductsOpen(false)}>
-              <Link to="/products"
-                className={`relative flex items-center gap-1 px-4 py-2.5 rounded-lg transition-all duration-200 font-semibold group/prod overflow-hidden ${location.pathname.startsWith('/products') ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'}`}>
-                Products
-                <ChevronDown size={14} className={`transition-transform duration-200 ${productsOpen ? 'rotate-180 text-blue-600' : location.pathname.startsWith('/products') ? 'text-blue-600' : ''}`} />
-                <span className={`absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-blue-600 rounded-full transition-all duration-300 ${location.pathname.startsWith('/products') ? 'w-4' : 'w-0 group-hover/prod:w-4'}`} />
-              </Link>
-              {productsOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white border border-gray-100 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.10)] py-2 z-50 overflow-hidden"
-                  style={{ animation: 'fadeInUp 0.18s ease-out', minWidth: '240px' }}>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest px-4 py-2">Categories</p>
-                  {CATEGORIES.map(cat => (
-                    <Link key={cat.id} to={`/products/${cat.id}`}
-                      className="flex items-center gap-3 px-4 py-2.5 hover:bg-blue-50 transition-colors group/item">
-                      <span className="text-xl w-8 text-center group-hover/item:scale-110 transition-transform">{cat.icon}</span>
-                      <span className="text-sm font-semibold text-gray-700 group-hover/item:text-blue-600 transition-colors">{cat.label}</span>
-                    </Link>
-                  ))}
-                  <div className="border-t border-gray-100 mt-2 pt-1">
-                    <Link to="/products" className="flex items-center justify-between px-4 py-2.5 text-xs text-blue-600 font-bold hover:bg-blue-50 transition-colors">
-                      View All Products <ArrowRight size={13} />
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
+            {navLinks.map(({ to, label, activeCheck }) => {
+              const isActive = activeCheck(location.pathname);
+              return (
+                <Link key={to} to={to}
+                  className={`relative px-4 py-2.5 transition-all duration-200 group/link ${isActive ? 'text-blue-600 font-extrabold text-[15px] scale-105' : 'text-gray-500 font-semibold text-[14px] hover:text-gray-500'}`}>
+                  {label}
+                  <span className={`absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-blue-600 rounded-full transition-all duration-300 ${isActive ? 'w-6' : 'w-0 group-hover/link:w-6'}`} />
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-2 shrink-0">
@@ -251,12 +228,12 @@ const Navbar = () => {
 
       {/* ═══ MOBILE MENU ═══ */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 z-[90]">
+        <div className="md:hidden fixed inset-0 z-90">
           {/* Backdrop — full screen dark overlay */}
           <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.7)', animation: 'fadeInUp 0.15s ease-out' }} />
 
           {/* Menu Panel — solid white, below navbar */}
-          <div className="absolute top-[72px] left-0 right-0 z-[100]"
+          <div className="absolute top-[72px] left-0 right-0 z-100"
             style={{ background: '#FFFFFF', height: 'calc(100dvh - 72px)', overflow: 'hidden', animation: 'slideDown 0.3s cubic-bezier(0.34,1.56,0.64,1)' }}>
 
             <div className="flex flex-col justify-between h-full" style={{ overflow: 'hidden' }}>
@@ -295,11 +272,12 @@ const Navbar = () => {
                 {/* ── Navigation Links ── */}
                 <nav className="space-y-0.5">
                   {[
-                    { to: '/', label: 'Home', icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> },
-                    { to: '/about', label: 'About Us', icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> },
-                    { to: '/contact', label: 'Contact', icon: <Phone size={20} /> },
+                    { to: '/', label: 'Home', icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>, activeCheck: (path) => path === '/' },
+                    { to: '/products', label: 'Products', icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>, activeCheck: (path) => path.startsWith('/products') },
+                    { to: '/about', label: 'About Us', icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>, activeCheck: (path) => path === '/about' },
+                    { to: '/contact', label: 'Contact', icon: <Phone size={20} />, activeCheck: (path) => path === '/contact' },
                   ].map(link => {
-                    const isActive = location.pathname === link.to;
+                    const isActive = link.activeCheck(location.pathname);
                     return (
                       <Link key={link.to} to={link.to}
                         className={`flex items-center gap-3 px-3 h-[40px] rounded-xl text-[15px] font-bold transition-all duration-200 ${
@@ -315,7 +293,7 @@ const Navbar = () => {
                 </nav>
 
                 {/* ── Divider ── */}
-                <div className="my-1 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+                <div className="my-1 h-px bg-linear-to-r from-transparent via-gray-200 to-transparent" />
 
                 {/* ── Products Section ── */}
                 <div>

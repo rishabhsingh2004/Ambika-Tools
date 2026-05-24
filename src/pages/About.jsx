@@ -1,118 +1,131 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { config } from '../data/config';
+
+const Card = ({ children, className = '' }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.4, ease: 'easeOut' }}
+    className={`relative bg-white rounded-2xl p-8 border border-gray-200 max-w-5xl mx-auto mb-6 ${className}`}
+    style={{ boxShadow: '0 4px 6px rgba(0,0,0,0.04), 0 10px 40px rgba(37,99,235,0.08)' }}
+  >
+    <span 
+      className="absolute select-none pointer-events-none"
+      style={{ 
+        top: '20px', 
+        right: '24px', 
+        fontSize: '64px', 
+        color: '#2563eb', 
+        opacity: 0.25, 
+        fontFamily: 'Georgia, serif', 
+        lineHeight: 1 
+      }}
+    >
+      ❝
+    </span>
+    <div className="relative z-10">{children}</div>
+  </motion.div>
+);
 
 const About = () => (
-  <div className="min-h-screen">
-    {/* ═══ HERO ═══ */}
-    <section className="relative overflow-hidden py-12 sm:py-16 lg:py-20 px-4 sm:px-6"
-      style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #2563eb 100%)' }}>
-      <div className="absolute inset-0 pointer-events-none opacity-[0.06]" style={{
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)',
-        backgroundSize: '50px 50px'
+  <motion.div
+    initial={{ opacity: 0, scale: 0.92 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5, ease: 'easeOut' }}
+    className="min-h-screen"
+    style={{ background: 'linear-gradient(180deg, #f0f4ff 0%, #ffffff 40%)' }}
+  >
+    {/* HERO */}
+    <section className="relative pt-16 pb-8 px-4 sm:px-6 text-center overflow-hidden">
+      {/* Blue glow */}
+      <div style={{
+        position: 'absolute',
+        top: '40px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '600px',
+        height: '200px',
+        background: 'radial-gradient(ellipse, rgba(37,99,235,0.08) 0%, transparent 70%)',
+        pointerEvents: 'none',
+        zIndex: 0
       }} />
-      <div className="relative max-w-4xl mx-auto text-center text-white">
-        <p className="text-blue-300 font-bold text-xs sm:text-sm uppercase tracking-[0.2em] mb-3">Who We Are</p>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-poppins font-bold mb-3 sm:mb-4">About Ambika Tools</h1>
-        <p className="text-blue-100 text-base sm:text-lg max-w-xl mx-auto">Precision machines you can trust. 25+ years of excellence in industrial hardware.</p>
-        <div className="w-12 h-1 rounded-full mx-auto mt-5" style={{ background: 'linear-gradient(90deg, #60a5fa, #a5b4fc)' }} />
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <h1 className="text-4xl font-black text-gray-900 mb-3">
+          <span className="text-gray-900">About </span>
+          <span className="text-blue-600">Ambika Tools</span>
+        </h1>
+        <p className="text-gray-500 text-base max-w-[560px] mx-auto leading-relaxed">
+          Trusted machinery partner for banks, jewellers and businesses across India
+        </p>
       </div>
     </section>
 
-    {/* ═══ OUR STORY ═══ */}
-    <section className="sec-white sec-pad">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        <div>
-          <p className="section-label">Our Journey</p>
-          <h2 className="section-heading">The <span>Ambika Story</span></h2>
-          <div className="section-accent !mx-0 mb-6" />
-          <div className="space-y-4 text-gray-600 leading-relaxed text-sm sm:text-base">
-            <p>Founded in 2001, Ambika Tools has grown from a small machine retailer to one of India's most trusted names in industrial precision equipment.</p>
-            <p>We specialize in Cash Counting Machines, Gold Melting Machines, Precision Weighing Scales, and Safe Lockers. Our products are trusted by banks, jewellers, retailers, and government institutions across India.</p>
+    {/* CONTENT */}
+    <div className="px-4 sm:px-6 pb-16">
+      
+      {/* Card 1 */}
+      <Card>
+        <h2 className="text-2xl font-bold text-blue-600 mb-4">Who We Are</h2>
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex-1 text-base text-gray-600 leading-relaxed">
+            <p className="mb-3">Founded in {config.founded}, <strong>Ambika Tools</strong> has grown from a small machine retailer to one of India's most trusted names in industrial precision equipment.</p>
+            <p className="mb-3">We specialize in Cash Counting Machines, Gold Melting Machines, Precision Weighing Scales, and Safe Lockers. Our products are trusted by banks, jewellers, retailers, and government institutions across India.</p>
             <p>With a dedicated service team, factory-trained technicians, and a commitment to after-sales support, we ensure every customer gets the full value of their investment.</p>
           </div>
-        </div>
-        <div className="bg-gray-50 rounded-2xl p-6 sm:p-8 flex items-center justify-center min-h-48 sm:min-h-64 border border-gray-100">
-          <img src="/weighing_machine.png" alt="Our Products" className="max-h-48 sm:max-h-60 object-contain" />
-        </div>
-      </div>
-    </section>
-
-    <div className="sec-divider" />
-
-    {/* ═══ STATS ═══ */}
-    <section className="relative overflow-hidden py-12 sm:py-16 lg:py-20 px-4 sm:px-6"
-      style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)' }}>
-      <div className="absolute inset-0 pointer-events-none opacity-10" style={{
-        background: 'radial-gradient(circle at 30% 50%, #60a5fa, transparent 50%), radial-gradient(circle at 70% 50%, #818cf8, transparent 50%)',
-        filter: 'blur(40px)'
-      }} />
-      <div className="relative max-w-5xl mx-auto">
-        <div className="text-center mb-8 sm:mb-10">
-          <p className="text-blue-300 font-bold text-xs sm:text-sm uppercase tracking-[0.2em] mb-2">Our Track Record</p>
-          <h2 className="text-2xl sm:text-3xl font-poppins font-bold text-white">Numbers That <span className="text-yellow-300">Speak</span></h2>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
-          {[
-            { num: '25+', label: 'Years in Business' },
-            { num: '10,000+', label: 'Happy Customers' },
-            { num: '4', label: 'Product Categories' },
-            { num: 'Pan India', label: 'Service Network' },
-          ].map((s, i) => (
-            <div key={i} className="py-4 px-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <p className="text-2xl sm:text-3xl font-poppins font-bold text-yellow-300 mb-1">{s.num}</p>
-              <p className="text-blue-100 text-xs sm:text-sm">{s.label}</p>
+          <div className="lg:w-2/5">
+            <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ height: '380px', borderRadius: '12px', overflow: 'hidden' }}>
+              <img 
+                src="/owner.jpg"
+                alt="Shiv Prakash Soni - Owner, Ambika Tools"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'top center',
+                  borderRadius: '12px'
+                }}
+              />
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </Card>
 
-    {/* ═══ VALUES / WHY TRUST US ═══ */}
-    <section className="sec-gray sec-pad">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-10 sm:mb-12">
-          <p className="section-label">Why Us</p>
-          <h2 className="section-heading">Why Businesses <span>Trust Us</span></h2>
-          <p className="section-subtitle">Industry-leading standards and customer commitment</p>
-          <div className="section-accent" />
+      {/* Card 2 */}
+      <Card>
+        <h2 className="text-2xl font-bold text-blue-600 mb-4">Our Expertise</h2>
+        <div className="text-base text-gray-600 leading-relaxed">
+          <p className="mb-3">For over 25 years, we have brought world-class industrial machines to Indian businesses at fair prices. We understand the unique challenges of the Indian market—from voltage fluctuations to heavy daily use.</p>
+          <p className="mb-3">Every machine we deliver is BIS & NABL certified, engineered for durability, and tested rigorously before it reaches your business.</p>
+          <p>Our pan-India service network and factory-trained technicians ensure that you receive prompt support and maintenance whenever you need it.</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          {[
-            'BIS & NABL certified products for compliance-heavy industries',
-            'Factory-trained engineers for installation & calibration',
-            'Genuine spare parts & consumables always in stock',
-            'Detailed user manuals and video tutorials with every machine',
-            'Annual Maintenance Contracts (AMC) available',
-            'Transparent pricing with GST billing',
-          ].map((item, i) => (
-            <div key={i} className="flex items-start gap-3 bg-white border border-gray-200 p-4 rounded-xl min-h-[56px]">
-              <CheckCircle size={18} className="text-green-500 shrink-0 mt-0.5" />
-              <p className="text-sm text-gray-700">{item}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+      </Card>
 
-    {/* ═══ CTA ═══ */}
-    <section className="relative overflow-hidden py-12 sm:py-16 lg:py-20 px-4 sm:px-6"
-      style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
-      <div className="relative max-w-3xl mx-auto text-center text-white">
-        <p className="text-blue-400 font-bold text-xs sm:text-sm uppercase tracking-[0.2em] mb-3">Get Started</p>
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-poppins font-bold mb-3 sm:mb-4">Ready to Get Started?</h2>
-        <p className="text-gray-400 mb-8 text-sm sm:text-base max-w-lg mx-auto">Browse our complete product range or get in touch with our expert team today.</p>
-        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">
-          <Link to="/products" className="inline-flex items-center justify-center gap-2 bg-yellow-400 text-gray-900 font-bold px-6 py-3.5 rounded-xl hover:bg-yellow-300 transition-all min-h-[48px]">
-            Browse Products <ArrowRight size={16} />
-          </Link>
-          <Link to="/contact" className="inline-flex items-center justify-center border border-white/30 text-white font-semibold px-6 py-3.5 rounded-xl hover:bg-white hover:text-gray-900 transition-all min-h-[48px]">
-            Contact Us
-          </Link>
+      {/* Card 3 */}
+      <Card>
+        <h2 className="text-2xl font-bold text-blue-600 mb-4">Our Vision</h2>
+        <div className="text-base text-gray-600 leading-relaxed">
+          <p className="mb-3">We strive to empower Indian businesses with precision tools that boost efficiency and security. Our vision is to be the undisputed leader in industrial equipment, known for uncompromising quality and customer trust.</p>
+          <p>We believe in transparent pricing, honest advice, and building long-term relationships with our clients. Your growth is our success.</p>
         </div>
-      </div>
-    </section>
-  </div>
+      </Card>
+
+      {/* CTA Card */}
+      <Card className="text-center mt-10">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Want to Know More?</h2>
+        <p className="text-base text-gray-600 mb-6">Visit our showroom or contact us for a product demo</p>
+        <Link 
+          to="/contact" 
+          className="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-xl hover:bg-blue-700 transition-colors"
+        >
+          Contact Us
+        </Link>
+      </Card>
+
+    </div>
+  </motion.div>
 );
 
 export default About;

@@ -28,14 +28,21 @@ const getProduct = async (req, res) => {
 // ── POST /api/products  (admin only) ─────────────────────
 const createProduct = async (req, res) => {
   try {
+    if (req.body.specs && typeof req.body.specs === 'string') {
+      try {
+        req.body.specs = JSON.parse(req.body.specs);
+      } catch (e) {
+        req.body.specs = {};
+      }
+    }
     const { name, tagline, description, categoryId, image, specs, featured, price } = req.body;
 
     if (!name || !categoryId) {
       return res.status(400).json({ error: 'Name and categoryId are required.' });
     }
 
-    // If multer uploaded a file, use that path
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : (image || '');
+    // If multer uploaded a file, Cloudinary provides the URL in req.file.path
+    const imageUrl = req.file ? req.file.path : (image || '');
 
     const product = await Product.create({
       name, tagline, description, categoryId,
@@ -54,8 +61,15 @@ const createProduct = async (req, res) => {
 // ── PUT /api/products/:id  (admin only) ──────────────────
 const updateProduct = async (req, res) => {
   try {
+    if (req.body.specs && typeof req.body.specs === 'string') {
+      try {
+        req.body.specs = JSON.parse(req.body.specs);
+      } catch (e) {
+        req.body.specs = {};
+      }
+    }
     const updates = { ...req.body };
-    if (req.file) updates.image = `/uploads/${req.file.filename}`;
+    if (req.file) updates.image = req.file.path;
 
     const product = await Product.findByIdAndUpdate(
       req.params.id,

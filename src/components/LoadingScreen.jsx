@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { config } from '../data/config';
 
 const LoadingScreen = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
@@ -26,7 +27,7 @@ const LoadingScreen = ({ onComplete }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      className="fixed inset-0 z-9999 flex items-center justify-center"
       style={{
         background: 'linear-gradient(135deg, #020617 0%, #0f172a 40%, #1e3a8a 100%)',
         opacity: phase === 2 ? 0 : 1,
@@ -93,7 +94,7 @@ const LoadingScreen = ({ onComplete }) => {
               A
             </div>
             <span className="font-poppins font-black text-2xl text-white tracking-tight">
-              Ambika Tools
+              {config.businessName}
             </span>
           </div>
           <p className="text-blue-300/60 text-xs font-semibold uppercase tracking-[0.25em]">
@@ -105,7 +106,7 @@ const LoadingScreen = ({ onComplete }) => {
         <p className="text-blue-200/70 text-sm font-medium mb-6" style={{
           animation: 'loaderTextPulse 2s ease-in-out infinite',
         }}>
-          {phase === 1 ? 'Ready.' : 'Initializing Ambika Tools Experience…'}
+          {phase === 1 ? 'Ready.' : `Initializing ${config.businessName} Experience…`}
         </p>
 
         {/* Progress bar */}

@@ -1,13 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Plus, X, Upload, ArrowLeft, Save } from 'lucide-react';
-import { getProducts, addProduct, updateProduct, getCategories } from './utils/store';
+import { Plus, X, Upload, ArrowLeft, Save, AlertCircle } from 'lucide-react';
+import * as api from '../../services/api';
+import { getProducts as getLocalProducts, addProduct as addLocalProduct, updateProduct as updateLocalProduct, getCategories } from './utils/store';
 
 const BADGES = ['', 'NEW', 'BESTSELLER', 'POPULAR'];
 
 const EMPTY = {
   name: '', categoryId: '', tagline: '',
-  specs: [''], badge: '', image: '',
+  specs: [{ key: '', value: '' }], badge: '', image: '',
+};
+
+// Convert specs array [{key,value}] → plain object for backend Map schema
+const specsArrayToObject = (specs) => {
+  const obj = {};
+  specs.forEach(({ key, value }) => {
+    if (key && key.trim()) obj[key.trim()] = value || '';
+  });
+  return obj;
+};
+
+// Convert specs object/Map → [{key,value}] for UI
+const specsObjectToArray = (specs) => {
+  if (!specs || typeof specs !== 'object' || Array.isArray(specs)) {
+    return [{ key: '', value: '' }];
+  }
+  const entries = Object.entries(specs);
+  return entries.length ? entries.map(([key, value]) => ({ key, value })) : [{ key: '', value: '' }];
 };
 
 export default function ProductForm() {
@@ -16,63 +35,100 @@ export default function ProductForm() {
   const isEdit = Boolean(id);
   const fileRef = useRef();
 
-  const [form, setForm] = useState(EMPTY);
-  const [saving, setSaving] = useState(false);
+  const [form,       setForm]       = useState(EMPTY);
+  const [saving,     setSaving]     = useState(false);
   const [categories, setCategories] = useState([]);
+  const [error,      setError]      = useState('');
+  const [imageFile,  setImageFile]  = useState(null);  // actual File object for upload
 
   useEffect(() => {
     setCategories(getCategories());
     if (isEdit) {
-      const products = getProducts();
-      const p = products.find(x => x.id === id);
-      if (p) {
-        setForm({
-          name: p.name || '',
-          categoryId: p.categoryId || '',
-          tagline: p.tagline || '',
-          specs: p.specs?.length ? p.specs : [''],
-          badge: p.badge || '',
-          image: p.image || '',
+      // Try backend first, fall back to localStorage
+      api.getProductById(id)
+        .then(({ data: p }) => {
+          setForm({
+            name:       p.name       || '',
+            categoryId: p.categoryId || '',
+            tagline:    p.tagline    || '',
+            specs:      specsObjectToArray(p.specs),
+            badge:      p.badge      || '',
+            image:      p.image      || '',
+          });
+        })
+        .catch(() => {
+          // Fallback: load from localStorage
+          const products = getLocalProducts();
+          const p = products.find(x => x.id === id);
+          if (p) {
+            let specsForForm;
+            if (Array.isArray(p.specs)) {
+              specsForForm = p.specs.length ? p.specs.map(s => ({ key: s, value: '' })) : [{ key: '', value: '' }];
+            } else {
+              specsForForm = specsObjectToArray(p.specs);
+            }
+            setForm({ name: p.name || '', categoryId: p.categoryId || '', tagline: p.tagline || '', specs: specsForForm, badge: p.badge || '', image: p.image || '' });
+          }
         });
-      }
     }
   }, [id]);
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
-  const setSpec = (i, val) => setForm(f => {
-    const specs = [...f.specs];
-    specs[i] = val;
+  const setSpecField = (i, field, val) => setForm(f => {
+    const specs = f.specs.map((s, idx) => idx === i ? { ...s, [field]: val } : s);
     return { ...f, specs };
   });
 
-  const addSpec = () => setForm(f => ({ ...f, specs: [...f.specs, ''] }));
+  const addSpec = () => setForm(f => ({ ...f, specs: [...f.specs, { key: '', value: '' }] }));
   const removeSpec = (i) => setForm(f => ({ ...f, specs: f.specs.filter((_, idx) => idx !== i) }));
 
   const handleImage = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    setImageFile(file);
     const reader = new FileReader();
     reader.onload = (ev) => set('image', ev.target.result);
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const payload = {
-      ...form,
-      specs: form.specs.filter(s => s.trim()),
-      badge: form.badge || null,
-    };
-    setTimeout(() => {
-      if (isEdit) {
-        updateProduct(id, payload);
+    setError('');
+    const specsObj = specsArrayToObject(form.specs);
+
+    try {
+      // Build multipart FormData if image file selected, else send JSON
+      if (imageFile) {
+        const fd = new FormData();
+        fd.append('name',        form.name);
+        fd.append('categoryId',  form.categoryId);
+        fd.append('tagline',     form.tagline);
+        fd.append('badge',       form.badge || '');
+        fd.append('specs',       JSON.stringify(specsObj));
+        fd.append('image',       imageFile);
+        if (isEdit) { await api.updateProduct(id, fd); }
+        else        { await api.addProduct(fd); }
       } else {
-        addProduct(payload);
+        const payload = { name: form.name, categoryId: form.categoryId, tagline: form.tagline, badge: form.badge || null, specs: specsObj, image: form.image };
+        if (isEdit) { await api.updateProduct(id, payload); }
+        else        { await api.addProduct(payload); }
       }
       navigate('/admin/products');
-    }, 400);
+    } catch (apiErr) {
+      // Fallback to localStorage
+      const localPayload = { ...form, specs: specsObj, badge: form.badge || null };
+      if (isEdit) { updateLocalProduct(id, localPayload); }
+      else        { addLocalProduct(localPayload); }
+      if (apiErr?.response) {
+        setError(apiErr.response.data?.error || 'Save failed. Data stored locally.');
+      } else {
+        navigate('/admin/products');
+      }
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -86,6 +142,12 @@ export default function ProductForm() {
           <ArrowLeft size={15} /> Back
         </button>
       </div>
+
+      {error && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: 10, padding: '10px 16px', marginBottom: 16, fontSize: 13, color: '#b91c1c' }}>
+          <AlertCircle size={16} /> {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="admin-card" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
         {/* Product Name */}
@@ -132,9 +194,29 @@ export default function ProductForm() {
         {/* Specifications */}
         <div className="admin-form-group">
           <label className="admin-label">Specifications</label>
+          <div style={{ display: 'flex', gap: 6, marginBottom: 6, fontSize: 11, color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <span style={{ flex: 1 }}>Key (e.g. "Speed")</span>
+            <span style={{ flex: 1 }}>Value (e.g. "1,500 notes/min")</span>
+            <span style={{ width: 36 }}></span>
+          </div>
           {form.specs.map((spec, i) => (
             <div key={i} className="spec-row">
-              <input className="admin-input" id={`pf-spec-${i}`} value={spec} onChange={e => setSpec(i, e.target.value)} placeholder={`Spec ${i + 1}`} />
+              <input
+                className="admin-input"
+                id={`pf-spec-key-${i}`}
+                value={spec.key}
+                onChange={e => setSpecField(i, 'key', e.target.value)}
+                placeholder={`e.g. Speed`}
+                style={{ flex: 1 }}
+              />
+              <input
+                className="admin-input"
+                id={`pf-spec-val-${i}`}
+                value={spec.value}
+                onChange={e => setSpecField(i, 'value', e.target.value)}
+                placeholder={`e.g. 1,500 notes/min`}
+                style={{ flex: 1 }}
+              />
               <button type="button" onClick={() => removeSpec(i)} className="btn-danger" style={{ padding: '8px 10px' }} disabled={form.specs.length === 1}>
                 <X size={14} />
               </button>

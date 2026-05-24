@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { X, Eye, MessageCircle, ArrowRight, Check, Phone } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { waProductLink } from '../data/config';
 
 /* ─────────────────────────────────────────
@@ -27,7 +30,7 @@ const Badge = ({ badge }) => {
    Quick View Modal
 ───────────────────────────────────────── */
 const QuickView = ({ product, onClose }) => (
-  <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4" onClick={onClose}>
+  <div className="fixed inset-0 z-100 flex items-end sm:items-center justify-center sm:p-4" onClick={onClose}>
     <div className="absolute inset-0" style={{ background: 'rgba(6,12,31,0.75)', backdropFilter: 'blur(8px)' }} />
     <div
       className="relative bg-white w-full sm:max-w-2xl sm:rounded-2xl rounded-t-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
@@ -62,12 +65,12 @@ const QuickView = ({ product, onClose }) => (
           <p className="text-gray-500 text-sm mb-4">{product.tagline}</p>
 
           <ul className="space-y-1.5 mb-5 flex-1">
-            {product.specs.slice(0, 5).map((s, i) => (
-              <li key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                <span className="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg,#3b82f6,#1d4ed8)' }}>
-                  <Check size={9} className="text-white" />
-                </span>
-                {s}
+            {(Array.isArray(product.specs) ? product.specs : Object.entries(product.specs || {}).map(([k, v]) => `${k}: ${v}`))
+              .slice(0, 5)
+              .map((s, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                <FontAwesomeIcon icon={faCircleCheck} className="text-blue-500 text-xs mt-1 shrink-0" />
+                <span>{s}</span>
               </li>
             ))}
           </ul>
@@ -162,9 +165,8 @@ const ProductCard = ({ product, darkMode }) => {
         <div className="flex flex-col flex-1 p-5">
 
           {/* Name + tagline */}
-          <h3 className="font-poppins font-bold text-base leading-tight mb-1" style={{
-            color: hovered ? '#60a5fa' : (darkMode ? '#f8fafc' : '#111827'),
-            transition: 'color 0.2s ease'
+          <h3 className="font-poppins font-bold text-base leading-tight mb-1 transition-colors duration-200" style={{
+            color: hovered ? '#2563eb' : (darkMode ? '#f8fafc' : '#111827')
           }}>
             {product.name}
           </h3>
@@ -172,12 +174,12 @@ const ProductCard = ({ product, darkMode }) => {
 
           {/* Specs */}
           <ul className="space-y-1.5 mb-4 flex-1">
-            {product.specs.slice(0, 3).map((spec, i) => (
-              <li key={i} className={`flex items-center gap-2 text-xs ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
-                <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{
-                  background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)'
-                }} />
-                {spec}
+            {(Array.isArray(product.specs) ? product.specs : Object.entries(product.specs || {}).map(([k, v]) => `${k}: ${v}`))
+              .slice(0, 3)
+              .map((spec, i) => (
+              <li key={i} className={`flex items-start gap-2 text-xs ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
+                <FontAwesomeIcon icon={faCircleCheck} className="text-blue-500 text-xs mt-0.5 shrink-0" />
+                <span>{spec}</span>
               </li>
             ))}
           </ul>
@@ -216,7 +218,7 @@ const ProductCard = ({ product, darkMode }) => {
             <a href={waProductLink(product.name)} target="_blank" rel="noreferrer" data-stop-nav
               className="flex-1 flex items-center justify-center gap-1 text-xs font-bold py-2.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 text-white"
               style={{ background: 'linear-gradient(135deg,#16a34a,#15803d)', boxShadow: hovered ? '0 6px 20px rgba(22,163,74,0.4)' : '0 2px 8px rgba(22,163,74,0.2)', transition: 'all 0.3s ease' }}>
-              <MessageCircle size={12} /> Enquire
+              <FontAwesomeIcon icon={faWhatsapp} className="text-base" /> Enquire
             </a>
           </div>
         </div>

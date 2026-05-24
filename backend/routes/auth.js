@@ -6,8 +6,9 @@ const { protect } = require('../middleware/authMiddleware');
 // POST /api/auth/login
 router.post('/login', login);
 
-// POST /api/auth/seed  — run ONCE to create first admin, then remove or protect
-router.post('/seed', seed);
+// ⚠️  SEED ROUTE DISABLED — run manually in DB or via mongo shell if needed.
+// This route is commented out to prevent unauthorized admin creation in production.
+// router.post('/seed', seed);
 
 // GET /api/auth/me  — verify token + return admin info
 router.get('/me', protect, me);

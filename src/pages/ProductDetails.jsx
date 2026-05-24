@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, CheckCircle2, Phone, MessageCircle, X, Send, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle2, Phone, MessageCircle, X, Send, Search, Loader2 } from 'lucide-react';
 import { PRODUCTS, CATEGORIES } from '../data/products';
 import { config, waProductLink } from '../data/config';
+import { getProducts, getProductById, submitEnquiry } from '../services/api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 /* ── Enquiry Modal ── */
 const EnquiryModal = ({ product, onClose }) => {
@@ -10,17 +13,28 @@ const EnquiryModal = ({ product, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus('submitting');
-    // WhatsApp fallback — direct to WA with prefilled message
     const form = new FormData(e.target);
-    const name = form.get('name');
-    const phone = form.get('phone');
+    const name    = form.get('name')    || '';
+    const phone   = form.get('phone')   || '';
+    const message = form.get('message') || '';
+    // ── Save enquiry to backend (non-blocking) ────────────────
+    submitEnquiry({
+      name,
+      phone,
+      message,
+      productName: product.name,
+      productId:   product._id || product.id || null,
+      category:    product.categoryId || '',
+      source:      'product-page',
+    }).catch(() => {}); // don't block WhatsApp redirect if API down
+    // ── Open WhatsApp ─────────────────────────────────
     const msg = `Hi, I'm *${name}* (${phone}). I'm interested in: *${product.name}*. Please share details.`;
     window.open(`https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
     setStatus('sent');
   };
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center sm:p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-200 flex items-end sm:items-center justify-center sm:p-4" onClick={onClose}>
       <div className="absolute inset-0" style={{ background: 'rgba(6,12,31,0.7)', backdropFilter: 'blur(6px)' }} />
       <div className="relative bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-2xl shadow-2xl p-7 max-h-[90vh] overflow-y-auto"
         style={{ animation: 'slideUp 0.25s ease-out' }}
@@ -33,7 +47,7 @@ const EnquiryModal = ({ product, onClose }) => {
         {status === 'sent' ? (
           <div className="text-center py-8">
             <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MessageCircle size={24} className="text-green-600" />
+              <FontAwesomeIcon icon={faWhatsapp} className="text-2xl text-green-600" />
             </div>
             <h3 className="font-poppins font-bold text-xl text-gray-900 mb-2">Enquiry Sent!</h3>
             <p className="text-gray-500 text-sm mb-5">You'll be redirected to WhatsApp. Our team will reply shortly.</p>
@@ -62,7 +76,7 @@ const EnquiryModal = ({ product, onClose }) => {
               <button type="submit"
                 className="w-full flex items-center justify-center gap-2 font-bold text-sm py-3 rounded-xl text-white transition-all hover:-translate-y-0.5"
                 style={{ background: 'linear-gradient(135deg, #16a34a, #15803d)', boxShadow: '0 6px 20px rgba(22,163,74,0.35)' }}>
-                <MessageCircle size={16} /> Send via WhatsApp
+                <FontAwesomeIcon icon={faWhatsapp} className="text-base" /> Send via WhatsApp
               </button>
               <Link to="/contact" onClick={onClose}
                 className="flex items-center justify-center gap-1 text-sm text-blue-600 font-semibold hover:underline">
@@ -80,7 +94,54 @@ const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [enquiryOpen, setEnquiryOpen] = useState(false);
-  const product = PRODUCTS.find(p => p.id === id);
+  const [product,     setProduct]     = useState(null);
+  const [loading,     setLoading]     = useState(true);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+    getProductById(id)
+      .then(res => setProduct(res.data))
+      .catch(() => {
+        // Fallback: find in static catalog
+        const found = PRODUCTS.find(p => p.id === id);
+        setProduct(found || null);
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  useEffect(() => {
+    if (product) {
+      getProducts()
+        .then(res => {
+          const all = res.data || [];
+          const matched = all
+            .filter(p => 
+              p.categoryId === product.categoryId && 
+              (p._id || p.id) !== (product._id || product.id)
+            )
+            .slice(0, 4);
+          setRelatedProducts(matched);
+        })
+        .catch(() => {
+          const matched = PRODUCTS
+            .filter(p => 
+              p.categoryId === product.categoryId && 
+              (p._id || p.id) !== (product._id || product.id)
+            )
+            .slice(0, 4);
+          setRelatedProducts(matched);
+        });
+    }
+  }, [product]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 size={36} style={{ animation: 'spin 1s linear infinite', color: '#2563eb' }} />
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -94,7 +155,11 @@ const ProductDetails = () => {
   }
 
   const category = CATEGORIES.find(c => c.id === product.categoryId);
-  const related = PRODUCTS.filter(p => p.categoryId === product.categoryId && p.id !== product.id).slice(0, 3);
+  const related  = relatedProducts;
+  const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const imgSrc   = product.image
+    ? (product.image.startsWith('data:') || product.image.startsWith('http') ? product.image : `${BASE_URL}${product.image}`)
+    : '';
 
   return (
     <div className="min-h-screen">
@@ -119,7 +184,7 @@ const ProductDetails = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white border border-gray-200 rounded-2xl p-6 md:p-10 mb-10">
           {/* Image */}
           <div className="flex items-center justify-center bg-gray-50 rounded-xl min-h-64 p-8">
-            <img src={product.image} alt={product.name} className="max-h-64 object-contain" />
+            {imgSrc && <img src={imgSrc} alt={product.name} className="max-h-64 object-contain" />}
           </div>
 
           {/* Details */}
@@ -142,12 +207,19 @@ const ProductDetails = () => {
             <div className="mb-6">
               <h3 className="font-poppins font-semibold text-gray-800 mb-3 text-sm uppercase tracking-wide">Key Specifications</h3>
               <ul className="space-y-2">
-                {product.specs.map((spec, i) => (
-                  <li key={i} className="flex items-center gap-3 text-sm text-gray-700">
-                    <CheckCircle2 size={16} className="text-green-500 shrink-0" />
-                    {spec}
-                  </li>
-                ))}
+                {/* Handle both array-of-strings (static) and Map/object (backend) */}
+                {Array.isArray(product.specs)
+                  ? product.specs.map((spec, i) => (
+                      <li key={i} className="flex items-center gap-3 text-sm text-gray-700">
+                        <CheckCircle2 size={16} className="text-green-500 shrink-0" />{spec}
+                      </li>
+                    ))
+                  : Object.entries(product.specs || {}).map(([k, v], i) => (
+                      <li key={i} className="flex items-center gap-3 text-sm text-gray-700">
+                        <CheckCircle2 size={16} className="text-green-500 shrink-0" /><strong>{k}:</strong> {v}
+                      </li>
+                    ))
+                }
               </ul>
             </div>
 
@@ -167,7 +239,7 @@ const ProductDetails = () => {
             <div className="flex flex-col sm:flex-row gap-3">
               <a href={waProductLink(product.name)} target="_blank" rel="noreferrer"
                 className="btn-whatsapp justify-center flex-1 min-h-[48px]">
-                <MessageCircle size={16} /> WhatsApp Enquiry
+                <FontAwesomeIcon icon={faWhatsapp} className="text-base" /> WhatsApp Enquiry
               </a>
               <button onClick={() => setEnquiryOpen(true)}
                 className="btn-primary text-center flex-1 min-h-[48px]">
@@ -181,7 +253,7 @@ const ProductDetails = () => {
         <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 p-3 flex gap-2 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
           <a href={waProductLink(product.name)} target="_blank" rel="noreferrer"
             className="btn-whatsapp justify-center flex-1 text-xs py-3 min-h-[44px]">
-            <MessageCircle size={16} /> WhatsApp
+            <FontAwesomeIcon icon={faWhatsapp} className="text-base" /> WhatsApp
           </a>
           <button onClick={() => setEnquiryOpen(true)}
             className="btn-primary justify-center flex-1 text-xs py-3 min-h-[44px]">
@@ -203,15 +275,21 @@ const ProductDetails = () => {
               </Link>
             </div>
             <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-5 sm:overflow-visible sm:pb-0 hide-scrollbar">
-              {related.map(p => (
-                <Link key={p.id} to={`/products/item/${p.id}`} className="bg-white border border-gray-200 rounded-xl p-4 flex gap-4 card-hover min-w-[260px] sm:min-w-0 snap-start shrink-0 sm:shrink">
-                  <img src={p.image} alt={p.name} className="w-16 h-16 object-contain shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 text-sm mb-0.5">{p.name}</h4>
-                    <p className="text-gray-400 text-xs">{p.tagline}</p>
-                  </div>
-                </Link>
-              ))}
+              {related.map(p => {
+                const pId = p._id || p.id;
+                const pImg = p.image
+                  ? (p.image.startsWith('data:') || p.image.startsWith('http') || p.image.startsWith('/images/') ? p.image : `${BASE_URL}${p.image}`)
+                  : '';
+                return (
+                  <Link key={pId} to={`/products/item/${pId}`} className="bg-white border border-gray-200 rounded-xl p-4 flex gap-4 card-hover min-w-[260px] sm:min-w-0 snap-start shrink-0 sm:shrink">
+                    <img src={pImg} alt={p.name} className="w-16 h-16 object-contain shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-gray-900 text-sm mb-0.5">{p.name}</h4>
+                      <p className="text-gray-400 text-xs">{p.tagline}</p>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </section>
         )}

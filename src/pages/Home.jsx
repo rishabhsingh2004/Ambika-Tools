@@ -1,8 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, CheckCircle, ArrowRight, Shield, Zap, Globe, CreditCard, MessageCircle, Factory, ShieldCheck, Truck, Headphones, BadgeCheck } from 'lucide-react';
-import { CATEGORIES, PRODUCTS } from '../data/products';
+import { CATEGORIES, PRODUCTS as STATIC_PRODUCTS } from '../data/products';
 import ProductCard from '../components/ProductCard';
+import { getProducts } from '../services/api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { config, waLink } from '../data/config';
 
 const STATS = [
   { value: '25+', label: 'Years Experience' },
@@ -39,8 +43,25 @@ const useScrollReveal = () => {
 };
 
 const Home = () => {
-  const featured = CATEGORIES.map(cat => PRODUCTS.find(p => p.categoryId === cat.id)).filter(Boolean);
+  const [allProducts, setAllProducts] = useState(STATIC_PRODUCTS);
   const pageRef = useScrollReveal();
+
+  useEffect(() => {
+    getProducts()
+      .then(res => { 
+        if (res.data?.length) 
+          setAllProducts(res.data.map(p => ({ 
+            ...p, 
+            id: p._id || p.id 
+          }))); 
+      })
+      .catch(() => {}); // keep static fallback
+  }, []);
+
+  // One featured product per category
+  const featured = CATEGORIES.map(cat =>
+    allProducts.find(p => p.categoryId === cat.id)
+  ).filter(Boolean);
 
   return (
     <div ref={pageRef}>
@@ -83,7 +104,7 @@ const Home = () => {
               {/* Headline */}
               <h1 className="font-poppins font-black leading-[1.08] text-white mb-5" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', letterSpacing: '-0.02em' }}>
                 Precision Machines<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-yellow-300 to-yellow-500">
                   Engineered for
                 </span>{' '}
                 <span className="text-white">
@@ -116,10 +137,10 @@ const Home = () => {
                   Browse Products
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <a href="https://wa.me/919876543210" target="_blank" rel="noreferrer"
+                <a href={waLink()} target="_blank" rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 text-sm font-bold px-6 py-3.5 rounded-xl transition-all duration-300 hover:-translate-y-1 bg-white/5 border border-white/10 text-white hover:bg-white/10 backdrop-blur-md min-h-[48px]"
                 >
-                  <MessageCircle size={18} /> WhatsApp Us
+                  <FontAwesomeIcon icon={faWhatsapp} className="text-xl" /> WhatsApp Us
                 </a>
               </div>
             </div>
@@ -157,7 +178,7 @@ const Home = () => {
                       filter: 'blur(20px)',
                       transform: 'scale(1.2)'
                     }} />
-                    <img src="/cash_counting.png" alt="Cash Counter"
+                    <img src={(allProducts.find(p => p.categoryId === 'cash-counting')?.image) || "/cash_counting.png"} alt="Cash Counter"
                       className="relative w-48 h-48 object-contain"
                       style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))' }}
                     />
@@ -169,7 +190,7 @@ const Home = () => {
                   
                   {/* Floating card — Speed */}
                   <div className="absolute top-[10%] right-[0%] -translate-x-1/2 -translate-y-1/2" style={{ animation: 'spin-reverse 20s linear infinite' }}>
-                    <div className="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap bg-[#0f172a]/90 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+                    <div className="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap bg-brand-dark/90 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
                       <p className="text-gray-400 text-[9px] mb-0.5 uppercase tracking-wide">Speed</p>
                       <p className="text-white font-poppins font-black text-base leading-none">2000<span className="text-[9px] text-gray-400 font-normal ml-0.5">notes/min</span></p>
                     </div>
@@ -177,7 +198,7 @@ const Home = () => {
 
                   {/* Floating card — BIS */}
                   <div className="absolute bottom-[0%] left-[10%] -translate-x-1/2 -translate-y-1/2" style={{ animation: 'spin-reverse 20s linear infinite' }}>
-                    <div className="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap bg-[#0f172a]/90 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+                    <div className="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap bg-brand-dark/90 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
                       <div className="flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full" />
                         <span className="text-green-400 text-[9px] font-bold uppercase tracking-wider">BIS Certified</span>
@@ -188,7 +209,7 @@ const Home = () => {
 
                   {/* Floating card — Rating */}
                   <div className="absolute top-[20%] left-[-5%] -translate-x-1/2 -translate-y-1/2" style={{ animation: 'spin-reverse 20s linear infinite' }}>
-                    <div className="px-3 py-1.5 rounded-xl whitespace-nowrap bg-[#0f172a]/90 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+                    <div className="px-3 py-1.5 rounded-xl whitespace-nowrap bg-brand-dark/90 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
                       <p className="text-yellow-400 text-[9px] font-bold mb-0.5 tracking-wider">★★★★★ Rating</p>
                       <p className="text-gray-300 text-[9px] font-medium">10,000+ Customers</p>
                     </div>
@@ -264,7 +285,7 @@ const Home = () => {
               };
               return CATEGORIES.map((cat, i) => {
                 const d = CAT_DATA[cat.id];
-                const firstProduct = PRODUCTS.find(p => p.categoryId === cat.id);
+                const firstProduct = allProducts.find(p => p.categoryId === cat.id);
                 return (
                   <Link key={cat.id} to={`/products/${cat.id}`}
                     className="group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.13)]"
@@ -351,7 +372,7 @@ const Home = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {[
-              { icon: <Factory className="text-blue-600" size={24} />, title: '25+ Years Experience', desc: 'Trusted by thousands of businesses since 2001. Built on a foundation of quality and reliability.' },
+              { icon: <Factory className="text-blue-600" size={24} />, title: `${new Date().getFullYear() - parseInt(config.founded)}+ Years Experience`, desc: `Trusted by thousands of businesses since ${config.founded}. Built on a foundation of quality and reliability.` },
               { icon: <ShieldCheck className="text-blue-600" size={24} />, title: '1-Year Full Warranty', desc: 'Every machine comes with a 1-year full parts & service warranty, with AMC options available.' },
               { icon: <Truck className="text-blue-600" size={24} />, title: 'Pan-India Delivery', desc: 'We deliver and install machines anywhere in India, with a dedicated service team in all major cities.' },
               { icon: <Headphones className="text-blue-600" size={24} />, title: '24/7 Support', desc: 'Our technical team is just a call away. We provide on-site support and remote troubleshooting.' },
@@ -390,11 +411,14 @@ const Home = () => {
           </h2>
           <p className="text-blue-200 mb-8 text-base sm:text-lg">Talk to our expert team — we'll recommend the best machine for your business volume and budget.</p>
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">
-            <a href="https://wa.me/919876543210" target="_blank" rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-8 py-3.5 rounded-xl hover:from-green-400 hover:to-emerald-400 transition-all hover:-translate-y-0.5 min-h-[48px]"
+            <a href={waLink()} target="_blank" rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-linear-to-r from-green-500 to-emerald-500 text-white font-bold px-8 py-3.5 rounded-xl hover:from-green-400 hover:to-emerald-400 transition-all hover:-translate-y-0.5 min-h-[48px]"
               style={{ boxShadow: '0 6px 20px rgba(22,163,74,0.4)' }}
             >
-              <MessageCircle size={18} /> WhatsApp Now
+              <FontAwesomeIcon 
+                icon={faWhatsapp} 
+                className="text-xl"
+              /> WhatsApp Now
             </a>
             <Link to="/contact"
               className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-bold px-8 py-3.5 rounded-xl hover:bg-blue-50 transition-all hover:-translate-y-0.5 min-h-[48px]"
@@ -429,7 +453,7 @@ const Home = () => {
                 <div className="flex text-yellow-400 text-lg mb-3">{'★'.repeat(t.stars)}</div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-5 italic">"{t.review}"</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white font-bold text-sm font-poppins">
+                  <div className="w-9 h-9 rounded-full bg-linear-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white font-bold text-sm font-poppins">
                     {t.name.charAt(0)}
                   </div>
                   <div>

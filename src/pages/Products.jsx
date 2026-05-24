@@ -1,19 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ChevronRight, SlidersHorizontal, X, Folders, MessageCircle, Frown } from 'lucide-react';
-import { CATEGORIES, PRODUCTS } from '../data/products';
+import { ChevronRight, SlidersHorizontal, X, Folders, MessageCircle, Frown, Loader2 } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { CATEGORIES, PRODUCTS as STATIC_PRODUCTS } from '../data/products';
 import { waLink } from '../data/config';
 import ProductCard from '../components/ProductCard';
+import { getProducts } from '../services/api';
 
 const Products = () => {
   const { categoryId } = useParams();
   const [activeCategory, setActiveCategory] = useState(categoryId || 'all');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [products, setProducts] = useState(STATIC_PRODUCTS);
+  const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
     setActiveCategory(categoryId || 'all');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [categoryId]);
+
+  // Fetch products from API on mount
+  useEffect(() => {
+    getProducts()
+      .then(res => { if (res.data?.length) setProducts(res.data); })
+      .catch(() => { /* keep static fallback */ })
+      .finally(() => setLoading(false));
+  }, []);
 
   // Body scroll lock when filter sidebar open on mobile
   React.useEffect(() => {
@@ -26,8 +39,8 @@ const Products = () => {
   }, [sidebarOpen]);
 
   const filteredProducts = activeCategory === 'all'
-    ? PRODUCTS
-    : PRODUCTS.filter(p => p.categoryId === activeCategory);
+    ? products
+    : products.filter(p => p.categoryId === activeCategory);
 
   const currentCategory = CATEGORIES.find(c => c.id === activeCategory);
 
@@ -55,11 +68,11 @@ const Products = () => {
             }`}
           >
             <span className="flex items-center gap-2"><Folders size={16} className="text-gray-500" /> All Products</span>
-            <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{PRODUCTS.length}</span>
+            <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{products.length}</span>
           </button>
         </li>
         {CATEGORIES.map(cat => {
-          const count = PRODUCTS.filter(p => p.categoryId === cat.id).length;
+          const count = products.filter(p => p.categoryId === cat.id).length;
           return (
             <li key={cat.id}>
               <button
@@ -78,7 +91,7 @@ const Products = () => {
       <div className="m-3 p-3 bg-green-50 border border-green-200 rounded-lg text-center">
         <p className="text-xs text-gray-600 mb-2">Not sure which machine fits you?</p>
         <a href={waLink()} target="_blank" rel="noreferrer"
-          className="text-xs font-bold text-green-700 hover:underline flex items-center justify-center gap-1"><MessageCircle size={14} /> Ask on WhatsApp</a>
+          className="text-xs font-bold text-green-700 hover:underline flex items-center justify-center gap-1"><FontAwesomeIcon icon={faWhatsapp} className="text-base" /> Ask on WhatsApp</a>
       </div>
     </>
   );
@@ -119,7 +132,7 @@ const Products = () => {
 
           {/* ── Mobile Sidebar Overlay ── */}
           {sidebarOpen && (
-            <div className="fixed inset-0 z-[100] lg:hidden" onClick={() => setSidebarOpen(false)}>
+            <div className="fixed inset-0 z-100 lg:hidden" onClick={() => setSidebarOpen(false)}>
               <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
               <aside
                 className="absolute left-0 top-0 h-full w-72 bg-white shadow-2xl overflow-y-auto"
@@ -147,7 +160,11 @@ const Products = () => {
               <p className="text-gray-500 text-sm mt-1">{filteredProducts.length} products found</p>
             </div>
 
-            {filteredProducts.length === 0 ? (
+            {loading ? (
+              <div style={{ display: 'flex', justifyContent: 'center', padding: 60 }}>
+                <Loader2 size={28} style={{ animation: 'spin 1s linear infinite', color: '#2563eb' }} />
+              </div>
+            ) : filteredProducts.length === 0 ? (
               <div className="text-center py-20 text-gray-400">
                 <Frown size={48} className="mx-auto mb-4 text-gray-300" />
                 <p>No products found in this category.</p>
@@ -155,7 +172,7 @@ const Products = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                 {filteredProducts.map(product => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard key={product._id || product.id} product={{ ...product, id: product._id || product.id }} />
                 ))}
               </div>
             )}

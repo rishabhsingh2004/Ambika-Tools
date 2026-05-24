@@ -75,11 +75,11 @@ export const getCategories = () => SEED_CATEGORIES;
 // ─── Enquiries ───────────────────────────────────────────────────────────────
 
 const SEED_ENQUIRIES = [
-  { id: 'enq-001', name: 'Ramesh Sharma', phone: '+91 98001 11234', city: 'Mumbai', product: 'AT-100 Smart Note Counter', date: '2026-05-15', status: 'New', message: 'Need 3 units for our bank branch.' },
-  { id: 'enq-002', name: 'Priya Mehta', phone: '+91 90002 22345', city: 'Delhi', product: 'AT-GM 3 KG Furnace', date: '2026-05-14', status: 'Contacted', message: 'Interested in bulk order.' },
-  { id: 'enq-003', name: 'Suresh Joshi', phone: '+91 87003 33456', city: 'Pune', product: 'AT-Safe 50L Office Locker', date: '2026-05-13', status: 'Converted', message: 'Want to visit showroom.' },
-  { id: 'enq-004', name: 'Anjali Verma', phone: '+91 99004 44567', city: 'Ahmedabad', product: 'AT-W 500g Gold Weigher', date: '2026-05-12', status: 'New', message: 'Request for demo.' },
-  { id: 'enq-005', name: 'Kiran Patil', phone: '+91 96005 55678', city: 'Nagpur', product: 'AT-500 Floor Model Counter', date: '2026-05-11', status: 'New', message: 'Annual maintenance query.' },
+  { id: 'enq-001', name: 'Ramesh Sharma', phone: '+91 98001 11234', city: 'Mumbai', product: 'AT-100 Smart Note Counter', date: '2026-05-15', status: 'new', message: 'Need 3 units for our bank branch.' },
+  { id: 'enq-002', name: 'Priya Mehta', phone: '+91 90002 22345', city: 'Delhi', product: 'AT-GM 3 KG Furnace', date: '2026-05-14', status: 'read', message: 'Interested in bulk order.' },
+  { id: 'enq-003', name: 'Suresh Joshi', phone: '+91 87003 33456', city: 'Pune', product: 'AT-Safe 50L Office Locker', date: '2026-05-13', status: 'replied', message: 'Want to visit showroom.' },
+  { id: 'enq-004', name: 'Anjali Verma', phone: '+91 99004 44567', city: 'Ahmedabad', product: 'AT-W 500g Gold Weigher', date: '2026-05-12', status: 'new', message: 'Request for demo.' },
+  { id: 'enq-005', name: 'Kiran Patil', phone: '+91 96005 55678', city: 'Nagpur', product: 'AT-500 Floor Model Counter', date: '2026-05-11', status: 'new', message: 'Annual maintenance query.' },
 ];
 
 export const getEnquiries = () => {

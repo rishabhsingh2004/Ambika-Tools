@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from './utils/auth';
+import { login, saveToken } from './utils/auth';
+import { adminLogin } from '../../services/api';
 import { signInWithGoogle } from '../../lib/supabase';
 import { Wrench, Eye, EyeOff, Lock, User } from 'lucide-react';
 import './Login.css';
@@ -23,19 +24,27 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    setTimeout(() => {
+    try {
+      // ── Try real backend first ──────────────────────────
+      const { data } = await adminLogin({ username: form.username, password: form.password });
+      saveToken(data.token);
+      navigate('/admin/dashboard');
+    } catch (apiErr) {
+      // ── Fall back to mock credentials if backend down ───
       const ok = login(form.username, form.password);
       if (ok) {
         navigate('/admin/dashboard');
       } else {
-        setError('Invalid username or password');
+        setError(
+          apiErr?.response?.data?.error || 'Invalid username or password'
+        );
         setLoading(false);
       }
-    }, 600);
+    }
   };
 
   const handleGoogleLogin = async () => {
