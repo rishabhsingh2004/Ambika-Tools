@@ -146,41 +146,42 @@ const Home = () => {
             </div>
 
             {/* RIGHT — 3D Machine Showcase with ORBITAL ANIMATION */}
-            <div className="hidden lg:flex justify-center items-center relative h-[400px]">
-              <div className="relative w-[340px] h-[340px]">
+            <div className="hidden lg:flex justify-center items-center relative h-[500px] ml-10">
+              <div className="relative w-[440px] h-[440px]">
 
                 {/* Central glow platform */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-48 h-12 rounded-full pointer-events-none" style={{
-                  background: 'radial-gradient(ellipse, rgba(96,165,250,0.3) 0%, transparent 70%)',
-                  filter: 'blur(10px)'
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-56 h-12 rounded-full pointer-events-none" style={{
+                  background: 'radial-gradient(ellipse, rgba(234,179,8,0.3) 0%, transparent 70%)',
+                  filter: 'blur(12px)',
+                  animation: 'pulse 4s infinite alternate'
                 }} />
 
                 {/* Rotating ring 1 */}
                 <div className="absolute inset-0 rounded-full border pointer-events-none" style={{
-                  borderColor: 'rgba(96,165,250,0.2)',
+                  borderColor: 'rgba(234,179,8,0.2)',
                   animation: 'spin 18s linear infinite',
                   top: '8%', left: '8%', right: '8%', bottom: '8%'
                 }} />
                 
                 {/* Rotating ring 2 */}
                 <div className="absolute rounded-full border pointer-events-none" style={{
-                  borderColor: 'rgba(255,255,255,0.1)',
+                  borderColor: 'rgba(255,255,255,0.15)',
                   animation: 'spin-reverse 26s linear infinite',
                   top: '2%', left: '2%', right: '2%', bottom: '2%',
                   borderStyle: 'dashed'
                 }} />
 
-                {/* Main machine — center */}
-                <div className="absolute inset-0 flex items-center justify-center animate-float" style={{ animationDuration: '4s' }}>
-                  <div className="relative">
-                    <div className="absolute inset-0 rounded-full pointer-events-none" style={{
-                      background: 'radial-gradient(circle, rgba(96,165,250,0.4) 0%, transparent 60%)',
-                      filter: 'blur(20px)',
-                      transform: 'scale(1.2)'
+                {/* Main logo — center */}
+                <div className="absolute inset-0 flex items-center justify-center animate-float" style={{ animationDuration: '5s' }}>
+                  <div className="relative group perspective-1000">
+                    <div className="absolute inset-0 rounded-full pointer-events-none transition-all duration-700 group-hover:scale-125" style={{
+                      background: 'radial-gradient(circle, rgba(234,179,8,0.4) 0%, rgba(217,119,6,0.15) 50%, transparent 70%)',
+                      filter: 'blur(25px)',
+                      transform: 'scale(1.4)'
                     }} />
-                    <img src={(allProducts.find(p => p.categoryId === 'cash-counting')?.image) || "/cash_counting.png"} alt="Cash Counter"
-                      className="relative w-48 h-48 object-contain"
-                      style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))' }}
+                    <img src="/logo.png" alt="Ambika Tools Logo"
+                      className="relative w-[380px] h-[380px] object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-y-12"
+                      style={{ filter: 'drop-shadow(0 30px 40px rgba(0,0,0,0.6)) drop-shadow(0 0 20px rgba(234,179,8,0.4))' }}
                     />
                   </div>
                 </div>

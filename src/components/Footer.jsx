@@ -38,9 +38,9 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 sm:gap-10 mb-10">
         {/* Brand — always visible */}
         <div className="pb-6 sm:pb-0">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold font-poppins text-lg">A</div>
-            <span className="font-poppins font-bold text-white text-lg">{config.businessName}</span>
+          <div className="flex items-center gap-3 mb-4">
+            <img src="/logo.png" alt="Ambika Tools Logo" className="w-16 h-16 object-contain" />
+            <span className="font-poppins font-black text-white text-2xl tracking-tight">{config.businessName}</span>
           </div>
           <p className="text-sm leading-relaxed text-gray-400 mb-5">
             Precision industrial machines for cash counting, gold melting, weighing, and secure storage. Serving India since {config.founded}.

@@ -108,13 +108,14 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-[72px] gap-6">
 
           <Link to="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black font-poppins text-xl shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
-              style={{ background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)', boxShadow: '0 4px 14px rgba(37,99,235,0.35)' }}>
-              A
-            </div>
-            <div>
-              <div className="font-poppins font-black text-[1.25rem] leading-tight text-gray-900 tracking-tight">{config.businessName}</div>
-              <div className="text-[10px] font-bold tracking-[0.18em] uppercase text-blue-600 leading-none mt-0.5">{config.tagline}</div>
+            <img 
+              src="/logo.png" 
+              alt="Ambika Tools Logo" 
+              className="w-20 h-20 object-contain mt-1.5 transition-all duration-300 group-hover:scale-110" 
+            />
+            <div className="flex flex-col justify-center">
+              <div className="font-poppins font-black text-[1.75rem] leading-tight text-gray-900 tracking-tight">{config.businessName}</div>
+              <div className="text-[12px] font-bold tracking-[0.2em] uppercase text-blue-600 leading-none mt-1">{config.tagline}</div>
             </div>
           </Link>
 
