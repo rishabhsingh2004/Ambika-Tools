@@ -4,7 +4,7 @@
 import axios from 'axios';
 import { clearToken } from '../pages/admin/utils/auth';
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const BASE_URL = 'http://localhost:5000'; // Hardcoded temporarily so HMR picks it up without restart
 const TOKEN_KEY = 'ambika_admin_token';
 
 // ── Axios instance ────────────────────────────────────────
