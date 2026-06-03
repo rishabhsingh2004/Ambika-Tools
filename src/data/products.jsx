@@ -4,10 +4,10 @@
 import { Banknote, Flame, Scale, Lock } from 'lucide-react';
 
 export const CATEGORIES = [
-  { id: 'cash-counting', label: 'Cash Counting Machines', icon: <Banknote size={18} />, color: '#1d4ed8' },
-  { id: 'gold-melting', label: 'Gold Melting Machines', icon: <Flame size={18} />, color: '#b45309' },
-  { id: 'weighing', label: 'Gold & Silver Weighing Machines', icon: <Scale size={18} />, color: '#15803d' },
-  { id: 'safe-locker', label: 'Safe Lockers', icon: <Lock size={18} />, color: '#6d28d9' },
+  { id: 'cash-counting', label: 'Cash Counting Machines', icon: <Banknote size={18} />, color: '#1d4ed8', image: '/category-images/cash-counting.png' },
+  { id: 'gold-melting', label: 'Gold Melting Machines', icon: <Flame size={18} />, color: '#b45309', image: '/category-images/gold-melting.png' },
+  { id: 'weighing', label: 'Gold & Silver Weighing Machines', icon: <Scale size={18} />, color: '#15803d', image: '/category-images/weighing.png' },
+  { id: 'safe-locker', label: 'Safe Lockers', icon: <Lock size={18} />, color: '#6d28d9', image: '/category-images/safe-locker.png' },
 ];
 
 export const PRODUCTS = [

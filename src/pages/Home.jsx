@@ -308,7 +308,9 @@ const Home = () => {
                         }}>
                         0{i + 1}
                       </span>
-                      {firstProduct ? (
+                      {cat.image ? (
+                        <img src={cat.image} alt={cat.label} className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg relative z-10" />
+                      ) : firstProduct ? (
                         <img src={firstProduct.image} alt={cat.label} className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg relative z-10" />
                       ) : (
                         <div className="w-16 h-16 rounded-2xl bg-white/40 flex items-center justify-center text-3xl relative z-10">{cat.icon}</div>
