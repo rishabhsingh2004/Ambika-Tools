@@ -47,9 +47,46 @@ const useScrollReveal = () => {
 };
 
 const TESTIMONIALS = [
-  { name: 'Ramesh Jewellers', location: 'Mumbai', review: 'The gold weighing scale from Ambika is incredibly accurate. We rely on it for all our daily gold transactions. Highly recommended!', stars: 5 },
-  { name: 'City Bank Branch', location: 'Delhi', review: 'Their cash counters are fast, reliable, and easy to maintain. The service team responds quickly. Great product, great team.', stars: 5 },
-  { name: 'ShriRam Jewellery', location: 'Surat', review: 'The gold melting furnace we purchased has saved us hours of work every day. Build quality is excellent. Worth every rupee.', stars: 5 },
+  {
+    id: 1,
+    name: "Rajesh Gupta",
+    business: "Gupta Jewellers",
+    city: "Jaipur",
+    rating: 5,
+    review: "Ambika Tools ne humari jewellery shop ke liye best weighing machine provide ki. 2 saal ho gaye, abhi bhi perfectly accurate hai. Service bhi bahut fast hai."
+  },
+  {
+    id: 2,
+    name: "Sunil Agarwal",
+    business: "Agarwal Traders",
+    city: "Mumbai",
+    rating: 5,
+    review: "Cash counting machine liya tha, speed aur accuracy dono mein best hai. Bank grade quality hai. Puri team bahut helpful thi installation ke time."
+  },
+  {
+    id: 3,
+    name: "Manoj Sharma",
+    business: "Sharma Gold House",
+    city: "Delhi",
+    rating: 5,
+    review: "Safe locker quality ekdum top class hai. Fire resistant aur burglar proof dono. Humari 3 branches mein Ambika ka hi safe use karte hain. Highly recommended!"
+  },
+  {
+    id: 4,
+    name: "Pradeep Mehta",
+    business: "Punjab National Bank",
+    city: "Ludhiana",
+    rating: 5,
+    review: "Bank ke liye strong room door install karwaya. Quality aur finish dono mein no compromise. Installation team professional thi aur time pe kaam kiya."
+  },
+  {
+    id: 5,
+    name: "Vikram Singh",
+    business: "Singh Jewels & Co.",
+    city: "Chandigarh",
+    rating: 5,
+    review: "Gold melting machine bahut reliable hai. Temperature control accurate hai aur build quality zabardast. After sales service bhi bahut acha hai Ambika ka."
+  }
 ];
 
 const Home = () => {
@@ -499,7 +536,7 @@ const Home = () => {
                     style={{ border: '1px solid #e2e8f0', boxShadow: '0 4px 16px rgba(15,23,42,0.07)' }}
                   >
                     <div className="absolute top-4 right-5 text-5xl font-poppins font-black text-blue-50 select-none pointer-events-none leading-none">&ldquo;</div>
-                    <div className="flex text-yellow-400 text-lg mb-3">{'★'.repeat(t.stars)}</div>
+                    <div className="flex text-yellow-400 text-lg mb-3">{'★'.repeat(t.rating)}</div>
                     <p className="text-gray-700 italic text-sm leading-relaxed break-words overflow-hidden mb-5">
                       &ldquo;{t.review}&rdquo;
                     </p>
@@ -509,7 +546,7 @@ const Home = () => {
                       </div>
                       <div>
                         <p className="font-bold text-gray-900 text-sm">{t.name}</p>
-                        <p className="text-gray-400 text-xs">{t.location}</p>
+                        <p className="text-gray-400 text-xs">{t.business}, {t.city}</p>
                       </div>
                     </div>
                   </div>
