@@ -128,7 +128,7 @@ export const PRODUCTS = [
     categoryId: "safe-locker",
     name: "Drop-In Safes",
     tagline: "Secure cash drop for retail & petrol pumps",
-    image: "https://res.cloudinary.com/dts2pni7w/image/upload/v1780479589/ambika_tools_products/04-drop-in-safes.jpg",
+    image: "https://res.cloudinary.com/dts2pni7w/image/upload/v1780479593/ambika_tools_products/06-luxury-safes-tiger-series.jpg",
     price: "Ask for Price",
     specs: [
       "Drop Slot: Top Cash Slot",
@@ -177,7 +177,7 @@ export const PRODUCTS = [
     categoryId: "safe-locker",
     name: "Luxury Safes — Tiger Series",
     tagline: "Security that makes a statement",
-    image: "https://res.cloudinary.com/dts2pni7w/image/upload/v1780479593/ambika_tools_products/06-luxury-safes-tiger-series.jpg",
+    image: "https://res.cloudinary.com/dts2pni7w/image/upload/v1780479589/ambika_tools_products/04-drop-in-safes.jpg",
     price: "Ask for Price",
     specs: [
       "Design: Tiger Print Laser Cut",
