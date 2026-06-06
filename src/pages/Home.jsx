@@ -373,7 +373,7 @@ const Home = () => {
                         alt={cat.label}
                         className="w-full h-full object-contain p-4 drop-shadow-md transition-transform duration-300 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent" />
                       {/* Big faded number overlay */}
                       <span className="absolute font-poppins leading-none select-none pointer-events-none"
                         style={{ 
@@ -529,7 +529,7 @@ const Home = () => {
               {TESTIMONIALS.map((t, i) => (
                 <div
                   key={i}
-                  className="w-full md:w-1/3 flex-shrink-0 px-2 sm:px-3"
+                  className="w-full md:w-1/3 shrink-0 px-2 sm:px-3"
                 >
                   <div
                     className="relative bg-white rounded-2xl p-6 card-hover h-full"
@@ -537,7 +537,7 @@ const Home = () => {
                   >
                     <div className="absolute top-4 right-5 text-5xl font-poppins font-black text-blue-50 select-none pointer-events-none leading-none">&ldquo;</div>
                     <div className="flex text-yellow-400 text-lg mb-3">{'★'.repeat(t.rating)}</div>
-                    <p className="text-gray-700 italic text-sm leading-relaxed break-words overflow-hidden mb-5">
+                    <p className="text-gray-700 italic text-sm leading-relaxed wrap-break-word overflow-hidden mb-5">
                       &ldquo;{t.review}&rdquo;
                     </p>
                     <div className="flex items-center gap-3">
