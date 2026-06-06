@@ -120,7 +120,7 @@ const Products = () => {
           {/* ── Mobile Filter Toggle ── */}
           <button
             onClick={() => setSidebarOpen(true)}
-            className="lg:hidden flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors self-start"
+            className="lg:hidden flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors self-start mb-4"
           >
             <SlidersHorizontal size={16} /> Filter Categories
             {activeCategory !== 'all' && (
@@ -165,7 +165,7 @@ const Products = () => {
                 <Loader2 size={28} style={{ animation: 'spin 1s linear infinite', color: '#2563eb' }} />
               </div>
             ) : filteredProducts.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-24 text-center">
+              <div className="flex flex-col items-center justify-center py-16 text-center">
                 <div className="text-6xl mb-4">📦</div>
                 <h3 className="text-xl font-semibold text-gray-700 mb-2">
                   No Products Available
@@ -185,7 +185,7 @@ const Products = () => {
                 </a>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredProducts.map(product => (
                   <ProductCard key={product._id || product.id} product={{ ...product, id: product._id || product.id }} />
                 ))}

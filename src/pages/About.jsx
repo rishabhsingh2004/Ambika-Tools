@@ -9,7 +9,7 @@ const Card = ({ children, className = '' }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.4, ease: 'easeOut' }}
-    className={`relative bg-white rounded-2xl p-8 border border-gray-200 max-w-5xl mx-auto mb-6 ${className}`}
+    className={`relative bg-white rounded-2xl p-5 sm:p-8 border border-gray-200 max-w-5xl mx-auto mb-6 ${className}`}
     style={{ boxShadow: '0 4px 6px rgba(0,0,0,0.04), 0 10px 40px rgba(37,99,235,0.08)' }}
   >
     <span 
@@ -76,17 +76,12 @@ const About = () => (
             <p>With a dedicated service team, factory-trained technicians, and a commitment to after-sales support, we ensure every customer gets the full value of their investment.</p>
           </div>
           <div className="lg:w-2/5">
-            <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ height: '380px', borderRadius: '12px', overflow: 'hidden' }}>
+            <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ height: undefined, borderRadius: '12px', overflow: 'hidden' }}>
               <img 
                 src="/owner.jpg"
                 alt="Shiv Prakash Soni - Owner, Ambika Tools"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'top center',
-                  borderRadius: '12px'
-                }}
+                className="w-full h-64 lg:h-[380px] object-cover object-top"
+                style={{ borderRadius: '12px' }}
               />
             </div>
           </div>

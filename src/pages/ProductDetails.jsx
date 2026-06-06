@@ -183,7 +183,7 @@ const ProductDetails = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white border border-gray-200 rounded-2xl p-6 md:p-10 mb-10">
           {/* Image */}
-          <div className="flex items-center justify-center bg-gray-50 rounded-xl min-h-64 p-8">
+          <div className="flex items-center justify-center bg-gray-50 rounded-xl min-h-48 p-4 sm:p-8">
             {imgSrc && <img src={imgSrc} alt={product.name} className="max-h-64 object-contain" />}
           </div>
 
@@ -274,6 +274,7 @@ const ProductDetails = () => {
                 View All <ChevronRight size={16} />
               </Link>
             </div>
+            <div className="max-w-7xl mx-auto">
             <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-5 sm:overflow-visible sm:pb-0 hide-scrollbar">
               {related.map(p => {
                 const pId = p._id || p.id;
@@ -290,6 +291,7 @@ const ProductDetails = () => {
                   </Link>
                 );
               })}
+            </div>
             </div>
           </section>
         )}

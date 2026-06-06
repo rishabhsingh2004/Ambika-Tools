@@ -111,7 +111,7 @@ const Navbar = () => {
             <img 
               src="/logo.png" 
               alt="Ambika Tools Logo" 
-              className="w-20 h-20 object-contain mt-1.5 transition-all duration-300 group-hover:scale-110" 
+              className="w-16 h-16 object-contain mt-1.5 transition-all duration-300 group-hover:scale-110" 
             />
             <div className="flex flex-col justify-center">
               <div className="font-poppins font-black text-[1.75rem] leading-tight text-gray-900 tracking-tight">{config.businessName}</div>

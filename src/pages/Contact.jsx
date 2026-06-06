@@ -13,7 +13,7 @@ const Card = ({ children, className = '' }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.4, ease: 'easeOut' }}
-    className={`relative bg-white rounded-2xl p-8 border border-gray-200 max-w-2xl mx-auto mb-8 ${className}`}
+    className={`relative bg-white rounded-2xl p-5 sm:p-8 border border-gray-200 max-w-3xl mx-auto mb-8 ${className}`}
     style={{ boxShadow: '0 4px 6px rgba(0,0,0,0.04), 0 10px 40px rgba(37,99,235,0.08)' }}
   >
     <span 
@@ -93,7 +93,7 @@ const Contact = () => {
       </section>
 
       {/* CONTENT */}
-      <div className="px-4 sm:px-6 pb-4">
+      <div className="px-4 sm:px-6 pb-8 sm:pb-12">
         
         {/* Main Card: Get in Touch */}
         <Card>
@@ -207,7 +207,7 @@ const Contact = () => {
           <h2 className="font-semibold text-3xl text-gray-900 mb-4">
             Need Immediate Help?
           </h2>
-          <p className="text-gray-500 font-normal text-lg mb-10 max-w-md mx-auto leading-relaxed">
+          <p className="text-gray-500 font-normal text-lg mb-5 sm:mb-10 max-w-md mx-auto leading-relaxed">
             Contact us directly via WhatsApp or phone for quick assistance.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">

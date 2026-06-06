@@ -101,7 +101,7 @@ const Home = () => {
       {/* ═══════════════════════════════════════════════
           PREMIUM HERO SECTION (DARK BLUE)
       ═══════════════════════════════════════════════ */}
-      <section className="relative pt-12 md:pt-16 pb-24 md:pb-32 flex flex-col justify-center overflow-hidden" style={{
+      <section className="relative pt-16 sm:pt-20 md:pt-16 pb-24 md:pb-32 flex flex-col justify-center overflow-hidden" style={{
         background: 'linear-gradient(135deg, #020617 0%, #0f172a 40%, #1e3a8a 80%, #2563eb 100%)'
       }}>
 
@@ -259,8 +259,8 @@ const Home = () => {
 
       {/* ── OVERLAPPING STATS BAR ── */}
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 -mt-12 z-20">
-        <div className="bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-gray-100 p-6 md:p-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 md:divide-x divide-gray-100">
+        <div className="bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-gray-100 p-4 md:p-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-4 md:divide-x divide-gray-100">
             {STATS.map((s, i) => (
               <div key={i} className="text-center px-4">
                 <p className="font-poppins font-black text-2xl md:text-3xl text-blue-600 mb-1">{s.value}</p>
@@ -293,7 +293,7 @@ const Home = () => {
             <div className="section-accent" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {(() => {
               const CAT_DATA = {
                 'cash-counting': {
@@ -330,7 +330,7 @@ const Home = () => {
                     style={{ background: d.gradient, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
                   >
                     {/* Image area */}
-                    <div className="relative w-full h-44 rounded-t-xl overflow-hidden">
+                    <div className="relative w-full h-32 md:h-44 rounded-t-xl overflow-hidden">
                       <img 
                         src={d.image}
                         alt={cat.label}
@@ -390,7 +390,7 @@ const Home = () => {
               View All <ArrowRight size={15} />
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {featured.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -436,6 +436,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <div className="border-t border-gray-100" />
       {/* ═══ CTA BANNER ═══ */}
       <section className="relative overflow-hidden sec-pad reveal"
         style={{ background: 'linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #2563eb 100%)' }}>

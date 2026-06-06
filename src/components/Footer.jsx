@@ -35,7 +35,7 @@ const Footer = () => {
       {/* Top gradient accent line */}
       <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, #3b82f6, #6366f1, #3b82f6, transparent)' }} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 sm:gap-10 mb-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-10 mb-10">
         {/* Brand — always visible */}
         <div className="pb-6 sm:pb-0">
           <div className="flex items-center gap-3 mb-4">
