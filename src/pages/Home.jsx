@@ -5,7 +5,7 @@ import { CATEGORIES, PRODUCTS as STATIC_PRODUCTS } from '../data/products';
 import catCashCounting from '../assets/categories/cat-cash-counting.png';
 import catGoldMelting from '../assets/categories/cat-gold-melting.png';
 import catWeighing from '../assets/categories/cat-weighing.png';
-import catSafeLockers from '../assets/categories/cat-safe-new.png';
+import catSafeLockers from '../assets/categories/cat-safe-metallic.jpg';
 import ProductCard from '../components/ProductCard';
 import { getProducts } from '../services/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
