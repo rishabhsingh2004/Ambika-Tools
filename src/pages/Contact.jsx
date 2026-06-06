@@ -65,7 +65,7 @@ const Contact = () => {
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="min-h-screen"
+      className="min-h-screen pt-[72px]"
       style={{ background: 'linear-gradient(180deg, #f0f4ff 0%, #ffffff 40%)' }}
     >
       {/* HERO */}

@@ -93,16 +93,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-all duration-500 ${
-        scrolled
-          ? 'border-gray-200/60 shadow-[0_4px_30px_rgba(0,0,0,0.06)]'
-          : 'border-gray-100 bg-white'
-      }`}
-      style={scrolled ? {
-        background: 'rgba(255,255,255,0.85)',
-        backdropFilter: 'blur(16px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(16px) saturate(180%)',
-      } : {}}
+      className="fixed top-0 left-0 right-0 w-full z-50 border-b border-gray-200/60 transition-all duration-500 backdrop-blur-md bg-white/90 shadow-sm"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-[72px] gap-6">

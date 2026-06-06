@@ -134,7 +134,7 @@ const Home = () => {
   }
 
   return (
-    <div ref={pageRef}>
+    <div ref={pageRef} className="pt-[72px]">
       {/* ═══════════════════════════════════════════════
           PREMIUM HERO SECTION (DARK BLUE)
       ═══════════════════════════════════════════════ */}
