@@ -162,10 +162,10 @@ const ProductCard = ({ product, darkMode }) => {
         </div>
 
         {/* ── Content ── */}
-        <div className="flex flex-col flex-1 p-5">
+        <div className="flex flex-col flex-1 p-3 sm:p-4">
 
           {/* Name + tagline */}
-          <h3 className="font-poppins font-bold text-base leading-tight mb-1 transition-colors duration-200" style={{
+          <h3 className="font-poppins font-bold text-sm sm:text-base leading-tight mb-1 transition-colors duration-200" style={{
             color: hovered ? '#2563eb' : (darkMode ? '#f8fafc' : '#111827')
           }}>
             {product.name}
@@ -177,7 +177,7 @@ const ProductCard = ({ product, darkMode }) => {
             {(Array.isArray(product.specs) ? product.specs : Object.entries(product.specs || {}).map(([k, v]) => `${k}: ${v}`))
               .slice(0, 3)
               .map((spec, i) => (
-              <li key={i} className={`flex items-start gap-2 text-xs ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
+              <li key={i} className={`flex items-start gap-2 text-xs sm:text-sm ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                 <FontAwesomeIcon icon={faCircleCheck} className="text-blue-500 text-xs mt-0.5 shrink-0" />
                 <span>{spec}</span>
               </li>
@@ -204,21 +204,21 @@ const ProductCard = ({ product, darkMode }) => {
           </div>
 
           {/* ── Action Buttons ── */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-3">
             <div
-              className="flex-1 flex items-center justify-center gap-1 text-xs font-bold py-2.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 text-white"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 text-xs sm:text-sm font-medium rounded-lg whitespace-nowrap transition-all duration-200 hover:-translate-y-0.5 text-white"
               style={{
                 background: 'linear-gradient(135deg,#1d4ed8,#2563eb)',
                 boxShadow: hovered ? '0 6px 20px rgba(29,78,216,0.4)' : '0 2px 8px rgba(29,78,216,0.2)',
                 transition: 'all 0.3s ease'
               }}
             >
-              <Eye size={12} /> View Details
+              <Eye size={14} className="shrink-0" /> View Details
             </div>
             <a href={waProductLink(product.name)} target="_blank" rel="noreferrer" data-stop-nav
-              className="flex-1 flex items-center justify-center gap-1 text-xs font-bold py-2.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 text-white"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 text-xs sm:text-sm font-medium rounded-lg whitespace-nowrap transition-all duration-200 hover:-translate-y-0.5 text-white"
               style={{ background: 'linear-gradient(135deg,#16a34a,#15803d)', boxShadow: hovered ? '0 6px 20px rgba(22,163,74,0.4)' : '0 2px 8px rgba(22,163,74,0.2)', transition: 'all 0.3s ease' }}>
-              <FontAwesomeIcon icon={faWhatsapp} className="text-base" /> Enquire
+              <FontAwesomeIcon icon={faWhatsapp} className="text-base shrink-0" /> Enquire
             </a>
           </div>
         </div>
