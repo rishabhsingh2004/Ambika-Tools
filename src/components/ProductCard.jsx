@@ -115,17 +115,12 @@ const ProductCard = ({ product, darkMode }) => {
   return (
     <>
       <div
-        className={`relative flex flex-col rounded-2xl overflow-hidden cursor-pointer ${darkMode ? 'bg-slate-800' : 'bg-white'}`}
+        className={`relative flex flex-col rounded-2xl overflow-hidden cursor-pointer shadow-md transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-xl active:scale-95 ${darkMode ? 'bg-slate-800' : 'bg-white'}`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={handleCardClick}
         style={{
           border: hovered ? '1px solid rgba(59,130,246,0.5)' : (darkMode ? '1px solid #334155' : '1px solid #e2e8f0'),
-          boxShadow: hovered
-            ? '0 24px 48px -8px rgba(29,78,216,0.22), 0 0 30px rgba(59,130,246,0.1), 0 0 0 1px rgba(59,130,246,0.12)'
-            : (darkMode ? '0 4px 20px rgba(0,0,0,0.3)' : '0 2px 10px rgba(15,23,42,0.07)'),
-          transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
-          transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
         }}
       >
         {/* ── Image Area ── */}
