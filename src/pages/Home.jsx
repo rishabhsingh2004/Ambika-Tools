@@ -99,13 +99,39 @@ const Home = () => {
   const testimonials = TESTIMONIALS;
   const total = testimonials.length;
 
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // Swiped left → next
+        setCurrent(prev => prev === total - 1 ? 0 : prev + 1);
+      } else {
+        // Swiped right → prev
+        setCurrent(prev => prev === 0 ? total - 1 : prev - 1);
+      }
+    }
+  };
+
   // Auto slide every 4 seconds
   useEffect(() => {
+    if (isPaused) return;
     const timer = setInterval(() => {
       setCurrent(prev => prev === total - 1 ? 0 : prev + 1);
     }, 4000);
     return () => clearInterval(timer);
-  }, [total]);
+  }, [total, isPaused]);
 
   useEffect(() => {
     getProducts()
@@ -528,6 +554,15 @@ const Home = () => {
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${current * 100}%)` }}
+              onTouchStart={(e) => {
+                setIsPaused(true);
+                handleTouchStart(e);
+              }}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={(e) => {
+                handleTouchEnd();
+                setTimeout(() => setIsPaused(false), 1000);
+              }}
             >
               {testimonials.map((t, i) => (
                 <div key={t.id} className="w-full flex-shrink-0 px-4">
