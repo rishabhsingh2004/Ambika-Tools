@@ -46,9 +46,25 @@ const useScrollReveal = () => {
   return ref;
 };
 
+const TESTIMONIALS = [
+  { name: 'Ramesh Jewellers', location: 'Mumbai', review: 'The gold weighing scale from Ambika is incredibly accurate. We rely on it for all our daily gold transactions. Highly recommended!', stars: 5 },
+  { name: 'City Bank Branch', location: 'Delhi', review: 'Their cash counters are fast, reliable, and easy to maintain. The service team responds quickly. Great product, great team.', stars: 5 },
+  { name: 'ShriRam Jewellery', location: 'Surat', review: 'The gold melting furnace we purchased has saved us hours of work every day. Build quality is excellent. Worth every rupee.', stars: 5 },
+];
+
 const Home = () => {
   const [allProducts, setAllProducts] = useState(STATIC_PRODUCTS);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const pageRef = useScrollReveal();
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const totalSlides = isMobile ? TESTIMONIALS.length : 1; // desktop shows all 3 at once
 
   useEffect(() => {
     getProducts()
@@ -453,7 +469,7 @@ const Home = () => {
       </section>
 
       {/* ═══ TESTIMONIALS ═══ */}
-      <section className="sec-gray sec-pad reveal">
+      <section className="sec-gray reveal" style={{ padding: '64px 0' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-12">
             <p className="section-label">Reviews</p>
@@ -461,31 +477,64 @@ const Home = () => {
             <p className="section-subtitle">Hear from businesses that trust Ambika Tools</p>
             <div className="section-accent" />
           </div>
-          <div className="flex md:grid md:grid-cols-3 gap-5 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 hide-scrollbar">
-            {[
-              { name: 'Ramesh Jewellers', location: 'Mumbai', review: 'The gold weighing scale from Ambika is incredibly accurate. We rely on it for all our daily gold transactions. Highly recommended!', stars: 5 },
-              { name: 'City Bank Branch', location: 'Delhi', review: 'Their cash counters are fast, reliable, and easy to maintain. The service team responds quickly. Great product, great team.', stars: 5 },
-              { name: 'ShriRam Jewellery', location: 'Surat', review: 'The gold melting furnace we purchased has saved us hours of work every day. Build quality is excellent. Worth every rupee.', stars: 5 },
-            ].map((t, i) => (
-              <div key={i}
-                className="relative bg-white rounded-2xl p-6 card-hover min-w-[280px] sm:min-w-[320px] md:min-w-0 snap-start shrink-0 md:shrink"
-                style={{ border: '1px solid #e2e8f0', boxShadow: '0 4px 16px rgba(15,23,42,0.07)' }}
-              >
-                <div className="absolute top-4 right-5 text-5xl font-poppins font-black text-blue-50 select-none pointer-events-none leading-none">"</div>
-                <div className="flex text-yellow-400 text-lg mb-3">{'★'.repeat(t.stars)}</div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-5 italic">"{t.review}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-linear-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white font-bold text-sm font-poppins">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 text-sm">{t.name}</p>
-                    <p className="text-gray-400 text-xs">{t.location}</p>
+
+          {/* Slider wrapper */}
+          <div className="overflow-hidden w-full">
+            <div
+              className="flex transition-all duration-500"
+              style={{
+                transform: isMobile
+                  ? `translateX(-${currentSlide * 100}%)`
+                  : 'translateX(0)'
+              }}
+            >
+              {TESTIMONIALS.map((t, i) => (
+                <div
+                  key={i}
+                  className="w-full md:w-1/3 flex-shrink-0 px-2 sm:px-3"
+                >
+                  <div
+                    className="relative bg-white rounded-2xl p-6 card-hover h-full"
+                    style={{ border: '1px solid #e2e8f0', boxShadow: '0 4px 16px rgba(15,23,42,0.07)' }}
+                  >
+                    <div className="absolute top-4 right-5 text-5xl font-poppins font-black text-blue-50 select-none pointer-events-none leading-none">&ldquo;</div>
+                    <div className="flex text-yellow-400 text-lg mb-3">{'★'.repeat(t.stars)}</div>
+                    <p className="text-gray-700 italic text-sm leading-relaxed break-words overflow-hidden mb-5">
+                      &ldquo;{t.review}&rdquo;
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full bg-linear-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white font-bold text-sm font-poppins shrink-0">
+                        {t.name.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="font-bold text-gray-900 text-sm">{t.name}</p>
+                        <p className="text-gray-400 text-xs">{t.location}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+
+          {/* Dots — mobile only */}
+          {isMobile && (
+            <div className="flex justify-center gap-2 mt-6">
+              {TESTIMONIALS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentSlide(i)}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: currentSlide === i ? '24px' : '8px',
+                    height: '8px',
+                    background: currentSlide === i ? '#2563eb' : '#cbd5e1'
+                  }}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>
