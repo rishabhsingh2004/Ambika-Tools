@@ -91,17 +91,20 @@ const TESTIMONIALS = [
 
 const Home = () => {
   const [allProducts, setAllProducts] = useState(STATIC_PRODUCTS);
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const pageRef = useScrollReveal();
 
-  useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
+  const [current, setCurrent] = useState(0);
+  const testimonials = TESTIMONIALS;
+  const total = testimonials.length;
 
-  const totalSlides = isMobile ? TESTIMONIALS.length : 1; // desktop shows all 3 at once
+  // Auto slide every 4 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => prev === total - 1 ? 0 : prev + 1);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [total]);
 
   useEffect(() => {
     getProducts()
@@ -517,62 +520,76 @@ const Home = () => {
           </div>
 
           {/* Slider wrapper */}
-          <div className="overflow-hidden w-full">
+          <div className="relative overflow-hidden w-full">
+            
+            {/* Slider Track */}
             <div
-              className="flex transition-all duration-500"
-              style={{
-                transform: isMobile
-                  ? `translateX(-${currentSlide * 100}%)`
-                  : 'translateX(0)'
-              }}
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${current * 100}%)` }}
             >
-              {TESTIMONIALS.map((t, i) => (
-                <div
-                  key={i}
-                  className="w-full md:w-1/3 shrink-0 px-2 sm:px-3"
-                >
-                  <div
-                    className="relative bg-white rounded-2xl p-6 card-hover h-full"
-                    style={{ border: '1px solid #e2e8f0', boxShadow: '0 4px 16px rgba(15,23,42,0.07)' }}
-                  >
-                    <div className="absolute top-4 right-5 text-5xl font-poppins font-black text-blue-50 select-none pointer-events-none leading-none">&ldquo;</div>
-                    <div className="flex text-yellow-400 text-lg mb-3">{'★'.repeat(t.rating)}</div>
-                    <p className="text-gray-700 italic text-sm leading-relaxed wrap-break-word overflow-hidden mb-5">
-                      &ldquo;{t.review}&rdquo;
+              {testimonials.map((t, i) => (
+                <div key={t.id} className="w-full flex-shrink-0 px-4">
+                  {/* Card */}
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mx-auto max-w-lg">
+                    
+                    {/* Stars */}
+                    <div className="flex gap-1 mb-3">
+                      {[...Array(5)].map((_, i) => (
+                        <span key={i} className="text-yellow-400 text-lg">★</span>
+                      ))}
+                    </div>
+                    
+                    {/* Review */}
+                    <p className="text-gray-600 italic text-sm leading-relaxed mb-4 wrap-break-word">
+                      "{t.review}"
                     </p>
+                    
+                    {/* Author */}
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-linear-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white font-bold text-sm font-poppins shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
                         {t.name.charAt(0)}
                       </div>
                       <div>
-                        <p className="font-bold text-gray-900 text-sm">{t.name}</p>
-                        <p className="text-gray-400 text-xs">{t.business}, {t.city}</p>
+                        <p className="font-semibold text-gray-900 text-sm">
+                          {t.name}
+                        </p>
+                        <p className="text-gray-500 text-xs">
+                          {t.business}, {t.city}
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
 
-          {/* Dots — mobile only */}
-          {isMobile && (
+            {/* Dots */}
             <div className="flex justify-center gap-2 mt-6">
-              {TESTIMONIALS.map((_, i) => (
+              {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setCurrentSlide(i)}
-                  className="rounded-full transition-all duration-300"
-                  style={{
-                    width: currentSlide === i ? '24px' : '8px',
-                    height: '8px',
-                    background: currentSlide === i ? '#2563eb' : '#cbd5e1'
-                  }}
-                  aria-label={`Go to slide ${i + 1}`}
+                  onClick={() => setCurrent(i)}
+                  className={`rounded-full transition-all duration-300 ${i === current ? 'w-6 h-2 bg-blue-600' : 'w-2 h-2 bg-gray-300'}`}
                 />
               ))}
             </div>
-          )}
+
+            {/* Prev Next Arrows */}
+            <button
+              onClick={() => setCurrent(current === 0 ? total - 1 : current - 1)}
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-50 z-10"
+            >
+              ‹
+            </button>
+            
+            <button
+              onClick={() => setCurrent(current === total - 1 ? 0 : current + 1)}
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-50 z-10"
+            >
+              ›
+            </button>
+
+          </div>
         </div>
       </section>
     </div>
