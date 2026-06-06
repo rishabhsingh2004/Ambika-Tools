@@ -53,11 +53,12 @@ const Home = () => {
   useEffect(() => {
     getProducts()
       .then(res => { 
-        if (res.data?.length) 
-          setAllProducts(res.data.map(p => ({ 
-            ...p, 
-            id: p._id || p.id 
-          }))); 
+        if (res.data?.length) {
+          const apiProducts = res.data.map(p => ({ ...p, id: p._id || p.id }));
+          const apiCategoryIds = new Set(apiProducts.map(p => p.categoryId));
+          const missingStaticProducts = STATIC_PRODUCTS.filter(p => !apiCategoryIds.has(p.categoryId));
+          setAllProducts([...apiProducts, ...missingStaticProducts]);
+        }
       })
       .catch(() => {}); // keep static fallback
   }, []);
