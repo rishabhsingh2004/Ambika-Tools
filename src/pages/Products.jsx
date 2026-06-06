@@ -7,6 +7,7 @@ import { CATEGORIES, PRODUCTS as STATIC_PRODUCTS } from '../data/products';
 import { config, waLink } from '../data/config';
 import ProductCard from '../components/ProductCard';
 import { getProducts } from '../services/api';
+import SEO from '../components/SEO';
 
 const Products = () => {
   const { categoryId } = useParams();
@@ -98,6 +99,10 @@ const Products = () => {
 
   return (
     <div className="min-h-screen pt-[72px]">
+      <SEO 
+        title="Our Products" 
+        description="Browse our wide range of weighing scales, cash counters, gold melting machines, and more."
+      />
       {/* Breadcrumb */}
       <div className="sec-white border-b border-gray-200 py-3 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-gray-500 overflow-x-auto whitespace-nowrap hide-scrollbar">

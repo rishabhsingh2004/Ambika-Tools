@@ -6,6 +6,7 @@ import { config, waProductLink } from '../data/config';
 import { getProducts, getProductById, submitEnquiry } from '../services/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import SEO from '../components/SEO';
 
 /* ── Enquiry Modal ── */
 const EnquiryModal = ({ product, onClose }) => {
@@ -163,6 +164,11 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen pt-[72px]">
+      <SEO 
+        title={product.name} 
+        description={product.tagline || `Buy high-quality ${product.name} from Ambika Tools.`}
+        image={imgSrc}
+      />
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-200 py-3 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-gray-500 overflow-x-auto whitespace-nowrap hide-scrollbar">

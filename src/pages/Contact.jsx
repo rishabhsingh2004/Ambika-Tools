@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Send, CheckCircle, AlertCircle, Phone, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 import { CATEGORIES } from '../data/products';
 import { config, waLink } from '../data/config';
 import { submitEnquiry } from '../services/api';
@@ -68,6 +69,7 @@ const Contact = () => {
       className="min-h-screen pt-[72px]"
       style={{ background: 'linear-gradient(180deg, #f0f4ff 0%, #ffffff 40%)' }}
     >
+      <SEO title="Contact Us" description="Get in touch with Ambika Tools for enquiries, support, or quotations." />
       {/* HERO */}
       <section className="relative pt-16 pb-8 px-4 sm:px-6 text-center overflow-hidden">
         {/* Blue glow */}

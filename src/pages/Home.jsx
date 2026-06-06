@@ -11,6 +11,7 @@ import { getProducts } from '../services/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { config, waLink } from '../data/config';
+import SEO from '../components/SEO';
 
 const STATS = [
   { value: '25+', label: 'Years Experience' },
@@ -138,6 +139,7 @@ const Home = () => {
 
   return (
     <div ref={pageRef} className="pt-[72px]">
+      <SEO title="Home" />
       {/* ═══════════════════════════════════════════════
           PREMIUM HERO SECTION (DARK BLUE)
       ═══════════════════════════════════════════════ */}

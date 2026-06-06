@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { config } from '../data/config';
+import SEO from '../components/SEO';
 
 const Card = ({ children, className = '' }) => (
   <motion.div
@@ -38,6 +39,7 @@ const About = () => (
     className="min-h-screen pt-[72px]"
     style={{ background: 'linear-gradient(180deg, #f0f4ff 0%, #ffffff 40%)' }}
   >
+    <SEO title="About Us" description="Learn more about Ambika Tools, a trusted name with 32+ years of experience in high-quality industrial machines." />
     {/* HERO */}
     <section className="relative pt-16 pb-8 px-4 sm:px-6 text-center overflow-hidden">
       {/* Blue glow */}
