@@ -4,7 +4,7 @@ import { ChevronRight, SlidersHorizontal, X, Folders, MessageCircle, Frown, Load
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { CATEGORIES, PRODUCTS as STATIC_PRODUCTS } from '../data/products';
-import { waLink } from '../data/config';
+import { config, waLink } from '../data/config';
 import ProductCard from '../components/ProductCard';
 import { getProducts } from '../services/api';
 
@@ -165,9 +165,24 @@ const Products = () => {
                 <Loader2 size={28} style={{ animation: 'spin 1s linear infinite', color: '#2563eb' }} />
               </div>
             ) : filteredProducts.length === 0 ? (
-              <div className="text-center py-20 text-gray-400">
-                <Frown size={48} className="mx-auto mb-4 text-gray-300" />
-                <p>No products found in this category.</p>
+              <div className="flex flex-col items-center justify-center py-24 text-center">
+                <div className="text-6xl mb-4">📦</div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                  No Products Available
+                </h3>
+                <p className="text-gray-500 text-sm max-w-xs">
+                  This category is coming soon. 
+                  Please enquire on WhatsApp for 
+                  availability.
+                </p>
+                <a 
+                  href={`https://wa.me/${config.whatsapp}`}
+                  target="_blank"
+                  className="mt-6 bg-green-500 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-green-600 transition-colors flex items-center gap-2"
+                >
+                  <FontAwesomeIcon icon={faWhatsapp} />
+                  Ask on WhatsApp
+                </a>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">

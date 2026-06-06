@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, CheckCircle, ArrowRight, Shield, Zap, Globe, CreditCard, MessageCircle, Factory, ShieldCheck, Truck, Headphones, BadgeCheck } from 'lucide-react';
 import { CATEGORIES, PRODUCTS as STATIC_PRODUCTS } from '../data/products';
+import catCashCounting from '../assets/categories/cat-cash-counting.png';
+import catGoldMelting from '../assets/categories/cat-gold-melting.png';
+import catWeighing from '../assets/categories/cat-weighing.png';
+import catSafeLockers from '../assets/categories/cat-safe-new.png';
 import ProductCard from '../components/ProductCard';
 import { getProducts } from '../services/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -267,21 +271,25 @@ const Home = () => {
                   desc: 'High-speed currency counters for banks, jewellers & businesses',
                   gradient: 'linear-gradient(135deg, #ecfdf5, #d1fae5)',
                   btnBg: '#16a34a', btnText: '#fff', accent: '#16a34a',
+                  image: catCashCounting,
                 },
                 'gold-melting': {
                   desc: 'Precision induction melters for gold, silver & metal processing',
                   gradient: 'linear-gradient(135deg, #fff7ed, #fed7aa)',
                   btnBg: '#ea580c', btnText: '#fff', accent: '#ea580c',
+                  image: catGoldMelting,
                 },
                 'weighing': {
                   desc: 'Accurate digital scales for jewellery & bullion weighing',
                   gradient: 'linear-gradient(135deg, #eff6ff, #bfdbfe)',
                   btnBg: '#2563eb', btnText: '#fff', accent: '#2563eb',
+                  image: catWeighing,
                 },
                 'safe-locker': {
                   desc: 'Heavy-duty security lockers for homes, offices & jewellery shops',
                   gradient: 'linear-gradient(135deg, #f5f3ff, #ddd6fe)',
                   btnBg: '#7c3aed', btnText: '#fff', accent: '#7c3aed',
+                  image: catSafeLockers,
                 },
               };
               return CATEGORIES.map((cat, i) => {
@@ -293,7 +301,13 @@ const Home = () => {
                     style={{ background: d.gradient, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
                   >
                     {/* Image area */}
-                    <div className="h-[180px] flex items-center justify-center p-4 relative">
+                    <div className="relative w-full h-44 rounded-t-xl overflow-hidden">
+                      <img 
+                        src={d.image}
+                        alt={cat.label}
+                        className="w-full h-full object-cover object-center"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
                       {/* Big faded number overlay */}
                       <span className="absolute font-poppins leading-none select-none pointer-events-none"
                         style={{ 
@@ -301,18 +315,13 @@ const Home = () => {
                           right: '14px', 
                           zIndex: 20, 
                           color: '#ffffff', 
-                          opacity: 0.7, 
+                          opacity: 0.9, 
                           fontSize: '28px', 
                           fontWeight: 900, 
-                          textShadow: '0 2px 8px rgba(0,0,0,0.3)' 
+                          textShadow: '0 2px 8px rgba(0,0,0,0.5)' 
                         }}>
                         0{i + 1}
                       </span>
-                      {firstProduct && firstProduct.image ? (
-                        <img src={firstProduct.image} alt={cat.label} className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg relative z-10" />
-                      ) : (
-                        <div className="w-16 h-16 rounded-2xl bg-white/40 flex items-center justify-center text-3xl relative z-10">{cat.icon}</div>
-                      )}
                     </div>
 
                     {/* Content area */}
