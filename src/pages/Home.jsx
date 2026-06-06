@@ -384,42 +384,36 @@ const Home = () => {
 
       <div className="sec-divider" />
 
-      {/* ═══ WHY CHOOSE US ═══ */}
-      <section className="sec-white sec-pad reveal">
+      <section className="sec-pad reveal" style={{ background: '#f8faff' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 sm:mb-12">
-            <p className="section-label">Our Promise</p>
-            <h2 className="section-heading">Why Choose <span>Ambika Tools?</span></h2>
+            <p className="section-label">WHY CHOOSE US</p>
+            <h2 className="section-heading">Trusted by <span>10,000+</span> Businesses</h2>
             <p className="section-subtitle">We stand by every machine we sell</p>
             <div className="section-accent" />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {[
-              { icon: <Factory className="text-blue-600" size={24} />, title: `${new Date().getFullYear() - parseInt(config.founded)}+ Years Experience`, desc: `Trusted by thousands of businesses since ${config.founded}. Built on a foundation of quality and reliability.` },
-              { icon: <ShieldCheck className="text-blue-600" size={24} />, title: '1-Year Full Warranty', desc: 'Every machine comes with a 1-year full parts & service warranty, with AMC options available.' },
-              { icon: <Truck className="text-blue-600" size={24} />, title: 'Pan-India Delivery', desc: 'We deliver and install machines anywhere in India, with a dedicated service team in all major cities.' },
-              { icon: <Headphones className="text-blue-600" size={24} />, title: '24/7 Support', desc: 'Our technical team is just a call away. We provide on-site support and remote troubleshooting.' },
-              { icon: <BadgeCheck className="text-blue-600" size={24} />, title: 'BIS Certified', desc: 'All products meet BIS and NABL standards — suitable for banks, government, and enterprise use.' },
-              { icon: <CreditCard className="text-blue-600" size={24} />, title: 'Flexible Payment', desc: 'We offer flexible payment terms for bulk orders. GST billing available.' },
+              { emoji: '🏭', number: `${new Date().getFullYear() - parseInt(config.founded)}+`, label: 'Years Experience' },
+              { emoji: '😊', number: '10K+',  label: 'Happy Customers' },
+              { emoji: '🛡️', number: '1 Yr',  label: 'Full Warranty' },
+              { emoji: '🚚', number: '🇮🇳',    label: 'Pan-India Delivery' },
+              { emoji: '✅', number: 'BIS',   label: 'Certified Products' },
+              { emoji: '📞', number: '24/7',  label: 'Customer Support' },
             ].map((item, i) => (
               <div key={i}
-                className="group flex gap-4 p-5 bg-white rounded-2xl card-hover cursor-default"
-                style={{ border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(15,23,42,0.05)' }}
+                className="flex flex-col items-center text-center p-5 sm:p-6 bg-white rounded-2xl"
+                style={{ border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(15,23,42,0.06)' }}
               >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 transition-transform duration-300 group-hover:scale-110"
-                  style={{ background: 'linear-gradient(135deg, #eff6ff, #dbeafe)', boxShadow: '0 4px 12px rgba(59,130,246,0.12)' }}
-                >
-                  {item.icon}
-                </div>
-                <div>
-                  <h4 className="font-poppins font-bold text-gray-900 mb-1 text-sm group-hover:text-blue-700 transition-colors">{item.title}</h4>
-                  <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-                </div>
+                <span className="text-4xl mb-3">{item.emoji}</span>
+                <h3 className="text-3xl font-black" style={{ color: '#1d4ed8' }}>{item.number}</h3>
+                <p className="text-sm font-semibold text-gray-600 mt-1">{item.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* ═══ CTA BANNER ═══ */}
       <section className="relative overflow-hidden sec-pad reveal"
