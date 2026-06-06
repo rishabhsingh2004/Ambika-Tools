@@ -330,7 +330,7 @@ const Home = () => {
             <div className="section-accent" />
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {(() => {
               const CAT_DATA = {
                 'cash-counting': {
