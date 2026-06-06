@@ -63,10 +63,22 @@ const Home = () => {
       .catch(() => {}); // keep static fallback
   }, []);
 
-  // One featured product per category
-  const featured = CATEGORIES.map(cat =>
-    allProducts.find(p => p.categoryId === cat.id)
-  ).filter(Boolean);
+  // Smart selection for 4 featured products (alternating categories)
+  const featured = [];
+  const usedIds = new Set();
+  const availableCategories = [...new Set(allProducts.map(p => p.categoryId))];
+  
+  let catIndex = 0;
+  while (featured.length < 4 && featured.length < allProducts.length) {
+    const catId = availableCategories[catIndex % availableCategories.length];
+    const product = allProducts.find(p => p.categoryId === catId && !usedIds.has(p.id));
+    if (product) {
+      featured.push(product);
+      usedIds.add(product.id);
+    }
+    catIndex++;
+    if (catIndex > 20) break;
+  }
 
   return (
     <div ref={pageRef}>

@@ -269,35 +269,5 @@ export const PRODUCTS = [
       "Usage: Banks, Vaults, Jewellers"
     ],
     badge: null
-  },
-  {
-    id: "cc-001",
-    categoryId: "cash-counting",
-    name: "AT-50 Basic Cash Counter",
-    tagline: "Best for small shops & retail",
-    image: "/cash_counting.png",
-    price: "Ask for Price",
-    specs: [
-      "Speed: 1,000 notes/min",
-      "UV + MG Detection",
-      "LCD Display",
-      "Auto-Start/Stop"
-    ],
-    badge: null
-  },
-  {
-    id: "gm-001",
-    categoryId: "gold-melting",
-    name: "AT-GM 1 KG Induction Melter",
-    tagline: "Melt up to 1 kg of gold per cycle",
-    image: "/gold_melting.png",
-    price: "Ask for Price",
-    specs: [
-      "Capacity: 1 Kg Gold",
-      "Max Temp: 1300°C",
-      "Induction Technology",
-      "Digital Temperature Control"
-    ],
-    badge: null
   }
 ];
