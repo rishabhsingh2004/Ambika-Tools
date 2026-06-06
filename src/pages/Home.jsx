@@ -305,7 +305,7 @@ const Home = () => {
                       <img 
                         src={d.image}
                         alt={cat.label}
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-contain p-4 drop-shadow-md transition-transform duration-300 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
                       {/* Big faded number overlay */}
