@@ -250,20 +250,13 @@ const Home = () => {
             <div className="hidden lg:flex justify-center items-center relative h-[500px] ml-10">
               <div className="relative w-[440px] h-[440px]">
 
-                {/* Central glow platform */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-56 h-12 rounded-full pointer-events-none" style={{
-                  background: 'radial-gradient(ellipse, rgba(234,179,8,0.3) 0%, transparent 70%)',
-                  filter: 'blur(12px)',
-                  animation: 'pulse 4s infinite alternate'
-                }} />
-
                 {/* Rotating ring 1 */}
                 <div className="absolute inset-0 rounded-full border pointer-events-none" style={{
                   borderColor: 'rgba(234,179,8,0.2)',
                   animation: 'spin 18s linear infinite',
                   top: '8%', left: '8%', right: '8%', bottom: '8%'
                 }} />
-                
+
                 {/* Rotating ring 2 */}
                 <div className="absolute rounded-full border pointer-events-none" style={{
                   borderColor: 'rgba(255,255,255,0.15)',
@@ -272,24 +265,34 @@ const Home = () => {
                   borderStyle: 'dashed'
                 }} />
 
-                {/* Main logo — center */}
-                <div className="absolute inset-0 flex items-center justify-center animate-float" style={{ animationDuration: '5s' }}>
-                  <div className="relative group perspective-1000">
-                    <div className="absolute inset-0 rounded-full pointer-events-none transition-all duration-700 group-hover:scale-125" style={{
-                      background: 'radial-gradient(circle, rgba(234,179,8,0.4) 0%, rgba(217,119,6,0.15) 50%, transparent 70%)',
-                      filter: 'blur(25px)',
-                      transform: 'scale(1.4)'
-                    }} />
-                    <img src="/logo.png" alt="Ambika Tools Logo"
-                      className="relative w-[380px] h-[380px] object-contain transition-all duration-700 group-hover:scale-110 group-hover:rotate-y-12"
-                      style={{ filter: 'drop-shadow(0 30px 40px rgba(0,0,0,0.6)) drop-shadow(0 0 20px rgba(234,179,8,0.4))' }}
-                    />
-                  </div>
+                {/* Hero Video Container */}
+                <div className="absolute inset-0 flex items-center justify-center group"
+                  style={{ transition: 'transform 0.4s ease', mixBlendMode: 'screen', transform: 'scale(0.85)' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(0.85)'; }}
+                >
+                  {/* Glow effect behind video that shows on hover */}
+                  <div className="absolute w-[280px] h-[280px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+                    style={{
+                      background: 'radial-gradient(circle, rgba(59,130,246,0.6) 0%, transparent 70%)',
+                      filter: 'blur(30px)',
+                    }}
+                  />
+                  
+                  {/* Video */}
+                  <video
+                    src="/hero.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-[90%] h-[90%] object-contain relative z-10"
+                  />
                 </div>
 
                 {/* ORBITAL TRACK FOR CARDS */}
                 <div className="absolute inset-0 pointer-events-none" style={{ animation: 'spin 20s linear infinite' }}>
-                  
+
                   {/* Floating card — Speed */}
                   <div className="absolute top-[10%] right-[0%] -translate-x-1/2 -translate-y-1/2" style={{ animation: 'spin-reverse 20s linear infinite' }}>
                     <div className="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap bg-brand-dark/90 backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
@@ -565,7 +568,7 @@ const Home = () => {
               }}
             >
               {testimonials.map((t, i) => (
-                <div key={t.id} className="w-full flex-shrink-0 px-4">
+                <div key={t.id} className="w-full shrink-0 px-4">
                   {/* Card */}
                   <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mx-auto max-w-lg">
                     

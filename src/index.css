@@ -415,6 +415,91 @@
   }
 }
 
+@keyframes logo-border-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes glowRotate {
+  0%   { background: linear-gradient(0deg,   transparent 60%, rgba(255,255,255,0.15) 100%); }
+  25%  { background: linear-gradient(90deg,  transparent 60%, rgba(255,255,255,0.15) 100%); }
+  50%  { background: linear-gradient(180deg, transparent 60%, rgba(255,255,255,0.15) 100%); }
+  75%  { background: linear-gradient(270deg, transparent 60%, rgba(255,255,255,0.15) 100%); }
+  100% { background: linear-gradient(360deg, transparent 60%, rgba(255,255,255,0.15) 100%); }
+}
+
+.glow-rotate {
+  animation: glowRotate 3s linear infinite;
+}
+
+/* Shimmer sweep directly ON the logo */
+@keyframes logo-shimmer-sweep {
+  0%   { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(260%) skewX(-15deg); }
+}
+
+.logo-shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.logo-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent 85%
+  );
+  animation: logo-shimmer-sweep 2.5s ease-in-out infinite;
+}
+
+
+/* White glowing border beam around logo */
+.logo-border-beam {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 270deg,
+    rgba(255,255,255,0.9) 300deg,
+    rgba(255,255,255,1) 330deg,
+    rgba(255,255,255,0.9) 360deg
+  );
+  animation: logo-border-spin 3s linear infinite;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.logo-border-beam::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.logo-border-mask {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: transparent;
+  z-index: 11;
+  pointer-events: none;
+  overflow: hidden;
+}
+
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
