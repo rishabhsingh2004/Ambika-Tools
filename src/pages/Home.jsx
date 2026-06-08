@@ -163,9 +163,70 @@ const Home = () => {
     if (catIndex > 20) break;
   }
 
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Ambika Tools",
+    "description": "India's trusted supplier of cash counting machines, gold melting furnaces, weighing scales and safe lockers. Pan-India delivery with on-site installation.",
+    "url": "https://ambika-tools.vercel.app",
+    "telephone": "+91-XXXXXXXXXX",
+    "email": "rakeshjoshi9814@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "IN",
+      "addressRegion": "Rajasthan"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "26.9124",
+      "longitude": "75.7873"
+    },
+    "openingHours": "Mo-Sa 09:00-18:00",
+    "priceRange": "₹₹",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Industrial Machines",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Cash Counting Machines"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Gold Melting Machines"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Safe Lockers"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Gold Weighing Machines"
+          }
+        }
+      ]
+    }
+  };
+
   return (
     <div ref={pageRef} className="pt-[72px]">
-      <SEO title="Home" />
+      <SEO
+        title="Ambika Tools — Cash Counters, Safe Lockers & Gold Machines | India"
+        description="India's most trusted supplier of cash counting machines, gold melting furnaces, precision weighing scales & safe lockers. BIS Certified. Pan-India delivery. Call now!"
+        keywords="cash counting machine, gold melting machine, safe locker, weighing scale, bank locker, jewellery scale, Jaipur, India"
+        schema={localBusinessSchema}
+      />
       {/* ═══════════════════════════════════════════════
           PREMIUM HERO SECTION (DARK BLUE)
       ═══════════════════════════════════════════════ */}

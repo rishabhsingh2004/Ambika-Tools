@@ -61,6 +61,23 @@ const Contact = () => {
     }
   };
 
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": config.businessName,
+    "image": "https://ambikatools.in/logo.png",
+    "url": "https://ambikatools.in",
+    "telephone": config.phone,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": config.address,
+      "addressLocality": config.city,
+      "addressRegion": config.state,
+      "addressCountry": "IN"
+    },
+    "openingHours": "Mo-Su 09:00-20:00"
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.92 }}
@@ -69,7 +86,11 @@ const Contact = () => {
       className="min-h-screen pt-[72px]"
       style={{ background: 'linear-gradient(180deg, #f0f4ff 0%, #ffffff 40%)' }}
     >
-      <SEO title="Contact Us" description="Get in touch with Ambika Tools for enquiries, support, or quotations." />
+      <SEO
+        title="Contact Ambika Tools — Get a Quote Today"
+        description="Contact Ambika Tools for pricing and enquiries on cash counters, gold melting machines, safe lockers and weighing scales. Quick response guaranteed."
+        keywords="contact ambika tools, get quote, machinery enquiry, cash counter price"
+      />
       {/* HERO */}
       <section className="relative pt-16 pb-8 px-4 sm:px-6 text-center overflow-hidden">
         {/* Blue glow */}

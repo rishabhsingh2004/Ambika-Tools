@@ -39,7 +39,11 @@ const About = () => (
     className="min-h-screen pt-[72px]"
     style={{ background: 'linear-gradient(180deg, #f0f4ff 0%, #ffffff 40%)' }}
   >
-    <SEO title="About Us" description="Learn more about Ambika Tools, a trusted name with 32+ years of experience in high-quality industrial machines." />
+    <SEO
+      title="About Ambika Tools — 32+ Years of Trust | India"
+      description="Ambika Tools has been India's trusted industrial machinery supplier for over 32 years. BIS certified products, pan-India delivery and dedicated after-sales support."
+      keywords="about ambika tools, industrial machinery supplier India, trusted machinery company"
+    />
     {/* HERO */}
     <section className="relative pt-16 pb-8 px-4 sm:px-6 text-center overflow-hidden">
       {/* Blue glow */}

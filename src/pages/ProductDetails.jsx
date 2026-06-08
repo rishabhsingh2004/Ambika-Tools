@@ -162,12 +162,40 @@ const ProductDetails = () => {
     ? (product.image.startsWith('data:') || product.image.startsWith('http') ? product.image : `${BASE_URL}${product.image}`)
     : '';
 
+  const productSchema = product ? {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "description": product.tagline,
+    "image": product.image,
+    "brand": {
+      "@type": "Brand",
+      "name": "Ambika Tools"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR",
+      "price": "0",
+      "priceSpecification": {
+        "price": "On Request",
+        "priceCurrency": "INR"
+      },
+      "availability": 
+        "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "Ambika Tools"
+      }
+    }
+  } : null;
+
   return (
     <div className="min-h-screen pt-[72px]">
-      <SEO 
-        title={product.name} 
-        description={product.tagline || `Buy high-quality ${product.name} from Ambika Tools.`}
-        image={imgSrc}
+      <SEO
+        title={`${product?.name} — Ambika Tools`}
+        description={product?.tagline}
+        keywords={`${product?.name}, ${product?.categoryId}, Ambika Tools`}
+        schema={productSchema}
       />
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-200 py-3 px-4 sm:px-6">

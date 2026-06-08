@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://ambikatools.in/sitemap.xml
+Disallow: /admin/
+Sitemap: https://ambika-tools.vercel.app/sitemap.xml
