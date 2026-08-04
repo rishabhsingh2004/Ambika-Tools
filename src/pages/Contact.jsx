@@ -87,9 +87,10 @@ const Contact = () => {
       style={{ background: 'linear-gradient(180deg, #f0f4ff 0%, #ffffff 40%)' }}
     >
       <SEO
-        title="Contact Ambika Tools — Get a Quote Today"
+        title="Contact Ambika Tools | Reliable B2B Industrial Suppliers in Jaipur & India"
         description="Contact Ambika Tools for pricing and enquiries on cash counters, gold melting machines, safe lockers and weighing scales. Quick response guaranteed."
         keywords="contact ambika tools, get quote, machinery enquiry, cash counter price"
+        schema={localBusinessSchema}
       />
       {/* HERO */}
       <section className="relative pt-16 pb-8 px-4 sm:px-6 text-center overflow-hidden">

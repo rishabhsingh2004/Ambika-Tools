@@ -2,22 +2,122 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ambika-tools.vercel.app/</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://ambika-tools.vercel.app/products</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://ambika-tools.vercel.app/about</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://ambika-tools.vercel.app/contact</loc>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/cash-counting</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/gold-melting</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/weighing</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/safe-locker</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef81c</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef824</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef828</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef821</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef823</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef826</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef829</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef81d</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef81b</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef81e</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef81f</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef820</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef822</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef825</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef827</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ambika-tools.vercel.app/products/item/6a1ff1fb25258745de0ef81a</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>

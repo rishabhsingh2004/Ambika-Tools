@@ -51,7 +51,8 @@ const QuickView = ({ product, onClose }) => (
           <div className="absolute inset-0 opacity-40" style={{
             background: 'radial-gradient(circle at 50% 60%, rgba(59,130,246,0.3), transparent 70%)'
           }} />
-          <img src={product.image} alt={product.name}
+          <img src={product.image} alt={`${product.name} supplier by Ambika Tools`}
+            loading="lazy"
             className="relative max-h-44 object-contain"
             style={{ filter: 'drop-shadow(0 12px 24px rgba(29,78,216,0.25))' }}
           />
@@ -144,7 +145,8 @@ const ProductCard = ({ product, darkMode }) => {
           {/* Product image */}
           <img
             src={product.image}
-            alt={product.name}
+            alt={`${product.name} supplier by Ambika Tools`}
+            loading="lazy"
             className="relative w-full h-full object-contain p-4"
             style={{
               filter: hovered

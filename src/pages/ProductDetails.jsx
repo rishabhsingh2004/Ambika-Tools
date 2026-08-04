@@ -192,10 +192,11 @@ const ProductDetails = () => {
   return (
     <div className="min-h-screen pt-[72px]">
       <SEO
-        title={`${product?.name} — Ambika Tools`}
-        description={product?.tagline}
-        keywords={`${product?.name}, ${product?.categoryId}, Ambika Tools`}
+        title={`${product?.name} | Manufacturer & Supplier India | Ambika Tools`}
+        description={product?.description || product?.tagline}
+        keywords={`${product?.name}, ${product?.categoryId}, industrial machines, Ambika Tools, supplier India, Jaipur`}
         schema={productSchema}
+        image={imgSrc}
       />
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-200 py-3 px-4 sm:px-6">
@@ -218,7 +219,7 @@ const ProductDetails = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white border border-gray-200 rounded-2xl p-6 md:p-10 mb-10">
           {/* Image */}
           <div className="flex items-center justify-center bg-gray-50 rounded-xl min-h-48 p-4 sm:p-8">
-            {imgSrc && <img src={imgSrc} alt={product.name} className="max-h-64 object-contain" />}
+            {imgSrc && <img src={imgSrc} alt={`${product.name} manufacturer and supplier in India`} className="max-h-64 object-contain" fetchpriority="high" />}
           </div>
 
           {/* Details */}
@@ -235,7 +236,13 @@ const ProductDetails = () => {
               </span>
             )}
             <h1 className="text-xl sm:text-2xl md:text-3xl font-poppins font-bold text-gray-900 mt-2 mb-2">{product.name}</h1>
-            <p className="text-gray-500 mb-5">{product.tagline}</p>
+            <p className="text-gray-500 mb-4">{product.tagline}</p>
+
+            {product.description && (
+              <div className="mb-6 prose prose-sm text-gray-600">
+                <p>{product.description}</p>
+              </div>
+            )}
 
             {/* Specifications */}
             <div className="mb-6">
@@ -317,7 +324,7 @@ const ProductDetails = () => {
                   : '';
                 return (
                   <Link key={pId} to={`/products/item/${pId}`} className="bg-white border border-gray-200 rounded-xl p-4 flex gap-4 card-hover min-w-[260px] sm:min-w-0 snap-start shrink-0 sm:shrink">
-                    <img src={pImg} alt={p.name} className="w-16 h-16 object-contain shrink-0" />
+                    <img src={pImg} alt={`${p.name} supplier by Ambika Tools`} loading="lazy" className="w-16 h-16 object-contain shrink-0" />
                     <div>
                       <h4 className="font-semibold text-gray-900 text-sm mb-0.5">{p.name}</h4>
                       <p className="text-gray-400 text-xs">{p.tagline}</p>

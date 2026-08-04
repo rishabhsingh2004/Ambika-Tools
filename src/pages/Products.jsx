@@ -100,9 +100,9 @@ const Products = () => {
   return (
     <div className="min-h-screen pt-[72px]">
       <SEO
-        title="All Products — Cash Counters, Safe Lockers & More | Ambika Tools"
+        title="Industrial Machines & Tools Catalog | Ambika Tools"
         description="Browse our complete range of industrial machines — cash counting machines, gold melting furnaces, precision weighing scales and high-security safe lockers."
-        keywords="cash counting machine price, safe locker buy, gold melting machine, weighing scale jewellery"
+        keywords="cash counting machine price, safe locker buy, gold melting machine, weighing scale jewellery, supplier India"
       />
       {/* Breadcrumb */}
       <div className="sec-white border-b border-gray-200 py-3 px-4 sm:px-6">

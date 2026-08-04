@@ -40,9 +40,23 @@ const About = () => (
     style={{ background: 'linear-gradient(180deg, #f0f4ff 0%, #ffffff 40%)' }}
   >
     <SEO
-      title="About Ambika Tools — 32+ Years of Trust | India"
+      title="About Us | Ambika Tools - B2B Industrial Machine Suppliers"
       description="Ambika Tools has been India's trusted industrial machinery supplier for over 32 years. BIS certified products, pan-India delivery and dedicated after-sales support."
       keywords="about ambika tools, industrial machinery supplier India, trusted machinery company"
+      schema={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ambika-tools.vercel.app/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About"
+        }]
+      }}
     />
     {/* HERO */}
     <section className="relative pt-16 pb-8 px-4 sm:px-6 text-center overflow-hidden">
@@ -85,7 +99,8 @@ const About = () => (
             <div className="relative w-full rounded-xl overflow-hidden bg-gray-100" style={{ height: undefined, borderRadius: '12px', overflow: 'hidden' }}>
               <img 
                 src="/owner.jpg"
-                alt="Shiv Prakash Soni - Owner, Ambika Tools"
+                alt="Shiv Prakash Soni - Owner, Ambika Tools - Best Industrial Suppliers"
+                loading="lazy"
                 className="w-full h-64 lg:h-[380px] object-cover object-top"
                 style={{ borderRadius: '12px' }}
               />
